@@ -28,6 +28,7 @@ ShowRssButtonInSectionTermList = true
 ShowToc = false
 defaultTheme = "auto"
 disableSpecial1stPost = true
+comments = true
 mainSections = ["авто-мото", "жиза", "программирование", "электроника", "hardware", "software"]
 
 [params.giscus]
