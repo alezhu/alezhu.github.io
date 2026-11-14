@@ -1,0 +1,3 @@
+---
+title: "Samsung Galaxy S"
+---

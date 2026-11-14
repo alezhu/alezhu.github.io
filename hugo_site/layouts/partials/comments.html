@@ -1,0 +1,21 @@
+{{- if site.Params.giscus.repoId }}
+<div class="comments-section" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+  <h3 style="margin-bottom: 1.5rem;">Комментарии</h3>
+  <div class="giscus"></div>
+  <script src="https://giscus.app/client.js"
+          data-repo="{{ site.Params.giscus.repo }}"
+          data-repo-id="{{ site.Params.giscus.repoId }}"
+          data-category="{{ site.Params.giscus.category | default "General" }}"
+          data-category-id="{{ site.Params.giscus.categoryId }}"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="ru"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+{{- end }}
