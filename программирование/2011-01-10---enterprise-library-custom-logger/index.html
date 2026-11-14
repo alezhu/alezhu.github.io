@@ -1,0 +1,210 @@
+<!doctype html><html lang=ru dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Enterprise Library Custom Logger | Блог alezhu</title><meta name=keywords content="программист,iопыт,.net"><meta name=description content="Enterprise Library Custom Logger
+Изучаю тут помаленьку Enterprise Library. Книжку читаю по нему и экспериментирую. Книжка, кстати, так себе - могла бы быть и поглубже. Но речь не о ней.
+Итак, в Enterprise Library есть модуль логирования. Работает примерно так. В своем приложении вы получаете экземпляр &ldquo;Писателя в лог&rdquo; (LogWriter) и вызываете у него одну из перегрузок из метода Write:
+
+`1. LogWriter writer = EnterpriseLibraryContainer.Current.GetInstance();
+2. writer.Write(&mldr;);
+
+This source code was highlighted with Source Code Highlighter.`
+
+
+&ldquo;Писатель&rdquo; берет из настроек приложения указанного &ldquo;читателя&rdquo; (или &ldquo;слушателя&rdquo; - потому, что классы имею в названии Listener) и передает ему запись типа LogEntry. &ldquo;Слушатель&rdquo; преобразует запись LogEntry с использованием заданного в настройках приложения.. &ldquo;форматировщика&rdquo; (класс, который реализует интерфейс ILogFormatter) и выводит полученное куда-нибудь (это зависит от типа &ldquo;слушателя&rdquo; - в файл, в базу данных, в журнал событий Windows и т.д.).
+Так вот, решил я воспользоваться этой функциональностью, чтобы просто выводить сообщения в консоль. Причем выводить только само сообщение. Как такое можно сделать?
+1й вариант в качестве слушателя назначить System Diagnostics Trace Listener (класс SystemDiagnosticsTraceListenerData). При этом в качестве TraceListener ему назначить класс System.Diagnostics.ConsoleTraceListener. Все работает, но вместо простого сообщения выводится полная информация по сообщению - время создания, категория, имя машины и пользователя и так далее - короче все поля класса LogEntry. И при этом гадость в том, что для System Diagnostics Trace Listener нельзя назначить &ldquo;форматировщика&rdquo;.
+Тогда 2ой вариант - пишем собственного слушателя. Наследуем его от CustomTraceListener. А поскольку родитель наш - абстрактный класс, то &ldquo;студия&rdquo; предлагает сразу реализовать 2 его метода Write и WriteLine. Получается как то так:"><meta name=author content="alezhu"><link rel=canonical href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/2011-01-10---enterprise-library-custom-logger/><link crossorigin=anonymous href=/assets/css/stylesheet.6adf4b2198dfa3949d553a40860b68823301741cec8b65d1bf35224736ecdd52.css integrity="sha256-at9LIZjfo5SdVTpAhgtogjMBdBzsi2XRvzUiRzbs3VI=" rel="preload stylesheet" as=style><link rel=icon href=https://alezhu.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://alezhu.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://alezhu.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://alezhu.github.io/apple-touch-icon.png><link rel=mask-icon href=https://alezhu.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=ru href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/2011-01-10---enterprise-library-custom-logger/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/2011-01-10---enterprise-library-custom-logger/"><meta property="og:site_name" content="Блог alezhu"><meta property="og:title" content="Enterprise Library Custom Logger"><meta property="og:description" content="Enterprise Library Custom Logger Изучаю тут помаленьку Enterprise Library. Книжку читаю по нему и экспериментирую. Книжка, кстати, так себе - могла бы быть и поглубже. Но речь не о ней. Итак, в Enterprise Library есть модуль логирования. Работает примерно так. В своем приложении вы получаете экземпляр “Писателя в лог” (LogWriter) и вызываете у него одну из перегрузок из метода Write:
+`1. LogWriter writer = EnterpriseLibraryContainer.Current.GetInstance(); 2. writer.Write(…);
+This source code was highlighted with Source Code Highlighter.` “Писатель” берет из настроек приложения указанного “читателя” (или “слушателя” - потому, что классы имею в названии Listener) и передает ему запись типа LogEntry. “Слушатель” преобразует запись LogEntry с использованием заданного в настройках приложения.. “форматировщика” (класс, который реализует интерфейс ILogFormatter) и выводит полученное куда-нибудь (это зависит от типа “слушателя” - в файл, в базу данных, в журнал событий Windows и т.д.). Так вот, решил я воспользоваться этой функциональностью, чтобы просто выводить сообщения в консоль. Причем выводить только само сообщение. Как такое можно сделать? 1й вариант в качестве слушателя назначить System Diagnostics Trace Listener (класс SystemDiagnosticsTraceListenerData). При этом в качестве TraceListener ему назначить класс System.Diagnostics.ConsoleTraceListener. Все работает, но вместо простого сообщения выводится полная информация по сообщению - время создания, категория, имя машины и пользователя и так далее - короче все поля класса LogEntry. И при этом гадость в том, что для System Diagnostics Trace Listener нельзя назначить “форматировщика”. Тогда 2ой вариант - пишем собственного слушателя. Наследуем его от CustomTraceListener. А поскольку родитель наш - абстрактный класс, то “студия” предлагает сразу реализовать 2 его метода Write и WriteLine. Получается как то так:"><meta property="og:locale" content="ru"><meta property="og:type" content="article"><meta property="article:section" content="программирование"><meta property="article:published_time" content="2011-01-10T00:08:00+00:00"><meta property="article:modified_time" content="2011-01-10T00:08:00+00:00"><meta property="article:tag" content="Программист"><meta property="article:tag" content="Iопыт"><meta property="article:tag" content=".Net"><meta name=twitter:card content="summary"><meta name=twitter:title content="Enterprise Library Custom Logger"><meta name=twitter:description content="Enterprise Library Custom Logger Изучаю тут помаленьку Enterprise Library. Книжку читаю по нему и экспериментирую. Книжка, кстати, так себе - могла бы быть и поглубже. Но речь не о ней. Итак, в Enterprise Library есть модуль логирования. Работает примерно так. В своем приложении вы получаете экземпляр “Писателя в лог” (LogWriter) и вызываете у него одну из перегрузок из метода Write:
+`1. LogWriter writer = EnterpriseLibraryContainer.Current.GetInstance(); 2. writer.Write(…);
+This source code was highlighted with Source Code Highlighter.` “Писатель” берет из настроек приложения указанного “читателя” (или “слушателя” - потому, что классы имею в названии Listener) и передает ему запись типа LogEntry. “Слушатель” преобразует запись LogEntry с использованием заданного в настройках приложения.. “форматировщика” (класс, который реализует интерфейс ILogFormatter) и выводит полученное куда-нибудь (это зависит от типа “слушателя” - в файл, в базу данных, в журнал событий Windows и т.д.). Так вот, решил я воспользоваться этой функциональностью, чтобы просто выводить сообщения в консоль. Причем выводить только само сообщение. Как такое можно сделать? 1й вариант в качестве слушателя назначить System Diagnostics Trace Listener (класс SystemDiagnosticsTraceListenerData). При этом в качестве TraceListener ему назначить класс System.Diagnostics.ConsoleTraceListener. Все работает, но вместо простого сообщения выводится полная информация по сообщению - время создания, категория, имя машины и пользователя и так далее - короче все поля класса LogEntry. И при этом гадость в том, что для System Diagnostics Trace Listener нельзя назначить “форматировщика”. Тогда 2ой вариант - пишем собственного слушателя. Наследуем его от CustomTraceListener. А поскольку родитель наш - абстрактный класс, то “студия” предлагает сразу реализовать 2 его метода Write и WriteLine. Получается как то так:"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Enterprise Library Custom Logger","item":"https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/2011-01-10---enterprise-library-custom-logger/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Enterprise Library Custom Logger","name":"Enterprise Library Custom Logger","description":"Enterprise Library Custom Logger Изучаю тут помаленьку Enterprise Library. Книжку читаю по нему и экспериментирую. Книжка, кстати, так себе - могла бы быть и поглубже. Но речь не о ней. Итак, в Enterprise Library есть модуль логирования. Работает примерно так. В своем приложении вы получаете экземпляр \u0026ldquo;Писателя в лог\u0026rdquo; (LogWriter) и вызываете у него одну из перегрузок из метода Write:\n`1. LogWriter writer = EnterpriseLibraryContainer.Current.GetInstance(); 2. writer.Write(\u0026hellip;);\nThis source code was highlighted with Source Code Highlighter.` \u0026ldquo;Писатель\u0026rdquo; берет из настроек приложения указанного \u0026ldquo;читателя\u0026rdquo; (или \u0026ldquo;слушателя\u0026rdquo; - потому, что классы имею в названии Listener) и передает ему запись типа LogEntry. \u0026ldquo;Слушатель\u0026rdquo; преобразует запись LogEntry с использованием заданного в настройках приложения.. \u0026ldquo;форматировщика\u0026rdquo; (класс, который реализует интерфейс ILogFormatter) и выводит полученное куда-нибудь (это зависит от типа \u0026ldquo;слушателя\u0026rdquo; - в файл, в базу данных, в журнал событий Windows и т.д.). Так вот, решил я воспользоваться этой функциональностью, чтобы просто выводить сообщения в консоль. Причем выводить только само сообщение. Как такое можно сделать? 1й вариант в качестве слушателя назначить System Diagnostics Trace Listener (класс SystemDiagnosticsTraceListenerData). При этом в качестве TraceListener ему назначить класс System.Diagnostics.ConsoleTraceListener. Все работает, но вместо простого сообщения выводится полная информация по сообщению - время создания, категория, имя машины и пользователя и так далее - короче все поля класса LogEntry. И при этом гадость в том, что для System Diagnostics Trace Listener нельзя назначить \u0026ldquo;форматировщика\u0026rdquo;. Тогда 2ой вариант - пишем собственного слушателя. Наследуем его от CustomTraceListener. А поскольку родитель наш - абстрактный класс, то \u0026ldquo;студия\u0026rdquo; предлагает сразу реализовать 2 его метода Write и WriteLine. Получается как то так:\n","keywords":["программист","iопыт",".net"],"articleBody":"Enterprise Library Custom Logger Изучаю тут помаленьку Enterprise Library. Книжку читаю по нему и экспериментирую. Книжка, кстати, так себе - могла бы быть и поглубже. Но речь не о ней. Итак, в Enterprise Library есть модуль логирования. Работает примерно так. В своем приложении вы получаете экземпляр “Писателя в лог” (LogWriter) и вызываете у него одну из перегрузок из метода Write:\n`1. LogWriter writer = EnterpriseLibraryContainer.Current.GetInstance(); 2. writer.Write(…);\nThis source code was highlighted with Source Code Highlighter.` “Писатель” берет из настроек приложения указанного “читателя” (или “слушателя” - потому, что классы имею в названии Listener) и передает ему запись типа LogEntry. “Слушатель” преобразует запись LogEntry с использованием заданного в настройках приложения.. “форматировщика” (класс, который реализует интерфейс ILogFormatter) и выводит полученное куда-нибудь (это зависит от типа “слушателя” - в файл, в базу данных, в журнал событий Windows и т.д.). Так вот, решил я воспользоваться этой функциональностью, чтобы просто выводить сообщения в консоль. Причем выводить только само сообщение. Как такое можно сделать? 1й вариант в качестве слушателя назначить System Diagnostics Trace Listener (класс SystemDiagnosticsTraceListenerData). При этом в качестве TraceListener ему назначить класс System.Diagnostics.ConsoleTraceListener. Все работает, но вместо простого сообщения выводится полная информация по сообщению - время создания, категория, имя машины и пользователя и так далее - короче все поля класса LogEntry. И при этом гадость в том, что для System Diagnostics Trace Listener нельзя назначить “форматировщика”. Тогда 2ой вариант - пишем собственного слушателя. Наследуем его от CustomTraceListener. А поскольку родитель наш - абстрактный класс, то “студия” предлагает сразу реализовать 2 его метода Write и WriteLine. Получается как то так:\n`1. using System; 2. using System.Diagnostics; 3. using Microsoft.Practices.EnterpriseLibrary.Common.Configuration; 4. using Microsoft.Practices.EnterpriseLibrary.Logging; 5. using Microsoft.Practices.EnterpriseLibrary.Logging.Configuration; 6. using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners; 8. namespace EntLibExt.Logging 9. { 10. [ConfigurationElementType(typeof(CustomTraceListenerData))] 11. public class ConsoleTraceListener : CustomTraceListener 12. { 13. public override void Write(string message) 14. { 15. Console.Write(message); 16. } 18. public override void WriteLine(string message) 19. { 20. Console.WriteLine(message); 21. } 22. } 23. }\nThis source code was highlighted with Source Code Highlighter.` C виду казалось, что все просто. У CustomTraceListener есть свойство типа Formatter, ему мы назначаем класс TextFormatter, а в шаблоне для последнего прописываем просто {message}. Компилим, все работает, за исключением того, что шаблон игнорируется и все равно выводятся все поля класса LogEntry. Ладно, хотя это оказалось и неправильно, я сделал еще 3й вариант и создал свой собственный “форматировщик”, который из всей LogEntry выводил только Message. Но прикол был в том, что метод моего “форматировщика” просто не вызывался. Гугл мне не помог ничем, поэтому я пошел просить помощи у отладчика. В отладчике нарисовалась интересная картина: CustomTraceListener вызывает для переданной ему LogEntry метод ToString(), а тот в свою очередь просто берет создает TextFormatter с шаблоном по умолчанию (там где все поля) и вызывает его метод форматирования - результат выводит через методы Write и WriteLine (в которых я это дело пишу в консоль). Иными словами, заданный в настройках приложения “форматировщик” просто игнорируется. Я уж было продумал, что у меня какая-то не такая Enterprise Library, и вместо своего ConsoleTraceListener поставил стандартный FlatFileTraceListener. И о чудо! - в файл записалось только само сообщение. Дальнейший анализ показал, что во FlatFileTraceListener переопределен метод TraceData, в котором и вызывается “форматировщик”. Таким образом, я вернулся к варианту 2, слегка его доработав, и все заработало как надо. Рабочий вариант класса “слушателя” для вывода в консоль с поддержкой форматирования выглядит так:\n`1. using System; 2. using System.Diagnostics; 3. using Microsoft.Practices.EnterpriseLibrary.Common.Configuration; 4. using Microsoft.Practices.EnterpriseLibrary.Logging; 5. using Microsoft.Practices.EnterpriseLibrary.Logging.Configuration; 6. using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners; 8. namespace EntLibExt.Logging 9. { 10. [ConfigurationElementType(typeof(CustomTraceListenerData))] 11. public class ConsoleTraceListener : CustomTraceListener 12. { 13. public override void Write(string message) 14. { 15. Console.Write(message); 16. } 18. public override void WriteLine(string message) 19. { 20. Console.WriteLine(message); 21. }\npublic override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data) { if (this.Filter == null || this.Filter.ShouldTrace(eventCache, source, eventType, id, null, null, data, null)) { if (data is LogEntry) { if (this.Formatter != null) { this.WriteLine(this.Formatter.Format(data as LogEntry)); } else { base.TraceData(eventCache, source, eventType, id, data); } } else { base.TraceData(eventCache, source, eventType, id, data); } } } } } This source code was highlighted with Source Code Highlighter.` Как мне кажется, налицо недоработка разработчиков Enterprise Library. Хотя метод решения прост и в принципе естественен, но все-таки, раз есть поле для “форматировщика” грамотнее было бы его использовать по умолчанию.\n","wordCount":"704","inLanguage":"ru","datePublished":"2011-01-10T00:08:00Z","dateModified":"2011-01-10T00:08:00Z","author":{"@type":"Person","name":"alezhu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/2011-01-10---enterprise-library-custom-logger/"},"publisher":{"@type":"Organization","name":"Блог alezhu","logo":{"@type":"ImageObject","url":"https://alezhu.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://alezhu.github.io/ accesskey=h title="Блог alezhu (Alt + H)">Блог alezhu</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/ title=Программирование><span>Программирование</span></a></li><li><a href=https://alezhu.github.io/hardware/ title=Hardware><span>Hardware</span></a></li><li><a href=https://alezhu.github.io/software/ title=Software><span>Software</span></a></li><li><a href=https://alezhu.github.io/%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/ title=Электроника><span>Электроника</span></a></li><li><a href=https://alezhu.github.io/%D0%B0%D0%B2%D1%82%D0%BE-%D0%BC%D0%BE%D1%82%D0%BE/ title=Авто-мото><span>Авто-мото</span></a></li><li><a href=https://alezhu.github.io/%D0%B6%D0%B8%D0%B7%D0%B0/ title=Жиза><span>Жиза</span></a></li><li><a href=https://alezhu.github.io/archives/ title=Архив><span>Архив</span></a></li><li><a href=https://alezhu.github.io/search/ title="Поиск (Alt + /)" accesskey=/><span>Поиск</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><nav class=breadcrumbs role=navigation aria-label=Breadcrumb><a href=/>Главная</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>
+<a href=/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/>Программирование</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg></nav><h1 class="post-title entry-hint-parent">Enterprise Library Custom Logger</h1><div class=post-meta><span title=2011-01-10T00:08:00+00:00>10 января 2011 г.</span>&nbsp;·&nbsp;<span>4 минуты</span>&nbsp;·&nbsp;<span>alezhu</span></div></header><div class="post-content md-content"><h1 id=enterprise-library-custom-logger>Enterprise Library Custom Logger<a hidden class=anchor aria-hidden=true href=#enterprise-library-custom-logger>#</a></h1><p>Изучаю тут помаленьку <a href=http://entlib.codeplex.com>Enterprise Library</a>. Книжку читаю по нему и экспериментирую. <a href="http://www.bgshop.ru/Details.aspx?id=9579325">Книжка</a>, кстати, так себе - могла бы быть и поглубже. Но речь не о ней.
+Итак, в Enterprise Library есть модуль логирования. Работает примерно так. В своем приложении вы получаете экземпляр &ldquo;Писателя в лог&rdquo; (LogWriter) и вызываете у него одну из перегрузок из метода Write:</p><blockquote><p>`1. LogWriter writer = EnterpriseLibraryContainer.Current.GetInstance<logwriter>();
+2. writer.Write(&mldr;);</p><ul><li>This source code was highlighted with Source Code Highlighter.`</li></ul></blockquote><p>&ldquo;Писатель&rdquo; берет из настроек приложения указанного &ldquo;читателя&rdquo; (или &ldquo;слушателя&rdquo; - потому, что классы имею в названии Listener) и передает ему запись типа LogEntry. &ldquo;Слушатель&rdquo; преобразует запись LogEntry с использованием заданного в настройках приложения.. &ldquo;форматировщика&rdquo; (класс, который реализует интерфейс ILogFormatter) и выводит полученное куда-нибудь (это зависит от типа &ldquo;слушателя&rdquo; - в файл, в базу данных, в журнал событий Windows и т.д.).
+Так вот, решил я воспользоваться этой функциональностью, чтобы просто выводить сообщения в консоль. Причем выводить только само сообщение. Как такое можно сделать?
+1й вариант в качестве слушателя назначить System Diagnostics Trace Listener (класс SystemDiagnosticsTraceListenerData). При этом в качестве TraceListener ему назначить класс System.Diagnostics.ConsoleTraceListener. Все работает, но вместо простого сообщения выводится полная информация по сообщению - время создания, категория, имя машины и пользователя и так далее - короче все поля класса LogEntry. И при этом гадость в том, что для System Diagnostics Trace Listener нельзя назначить &ldquo;форматировщика&rdquo;.
+Тогда 2ой вариант - пишем собственного слушателя. Наследуем его от CustomTraceListener. А поскольку родитель наш - абстрактный класс, то &ldquo;студия&rdquo; предлагает сразу реализовать 2 его метода Write и WriteLine. Получается как то так:</p><blockquote><p>`1. using System;
+2. using System.Diagnostics;
+3. using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+4. using Microsoft.Practices.EnterpriseLibrary.Logging;
+5. using Microsoft.Practices.EnterpriseLibrary.Logging.Configuration;
+6. using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
+8. namespace EntLibExt.Logging
+9. {
+10. [ConfigurationElementType(typeof(CustomTraceListenerData))]
+11. public class ConsoleTraceListener : CustomTraceListener
+12. {
+13. public override void Write(string message)
+14. {
+15. Console.Write(message);
+16. }
+18. public override void WriteLine(string message)
+19. {
+20. Console.WriteLine(message);
+21. }
+22. }
+23. }</p><ul><li>This source code was highlighted with Source Code Highlighter.`</li></ul></blockquote><p>C виду казалось, что все просто. У CustomTraceListener есть свойство типа Formatter, ему мы назначаем класс TextFormatter, а в шаблоне для последнего прописываем просто {message}.
+Компилим, все работает, за исключением того, что шаблон игнорируется и все равно выводятся все поля класса LogEntry.
+Ладно, хотя это оказалось и неправильно, я сделал еще 3й вариант и создал свой собственный &ldquo;форматировщик&rdquo;, который из всей LogEntry выводил только Message. Но прикол был в том, что метод моего &ldquo;форматировщика&rdquo; просто не вызывался.
+Гугл мне не помог ничем, поэтому я пошел просить помощи у отладчика.
+В отладчике нарисовалась интересная картина: CustomTraceListener вызывает для переданной ему LogEntry метод ToString(), а тот в свою очередь просто берет создает TextFormatter с шаблоном по умолчанию (там где все поля) и вызывает его метод форматирования - результат выводит через методы Write и WriteLine (в которых я это дело пишу в консоль). Иными словами, заданный в настройках приложения &ldquo;форматировщик&rdquo; просто игнорируется.
+Я уж было продумал, что у меня какая-то не такая Enterprise Library, и вместо своего ConsoleTraceListener поставил стандартный FlatFileTraceListener. И о чудо! - в файл записалось только само сообщение. Дальнейший анализ показал, что во FlatFileTraceListener переопределен метод TraceData, в котором и вызывается &ldquo;форматировщик&rdquo;. Таким образом, я вернулся к варианту 2, слегка его доработав, и все заработало как надо. Рабочий вариант класса &ldquo;слушателя&rdquo; для вывода в консоль с поддержкой форматирования выглядит так:</p><blockquote><p>`1. using System;
+2. using System.Diagnostics;
+3. using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+4. using Microsoft.Practices.EnterpriseLibrary.Logging;
+5. using Microsoft.Practices.EnterpriseLibrary.Logging.Configuration;
+6. using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
+8. namespace EntLibExt.Logging
+9. {
+10. [ConfigurationElementType(typeof(CustomTraceListenerData))]
+11. public class ConsoleTraceListener : CustomTraceListener
+12. {
+13. public override void Write(string message)
+14. {
+15. Console.Write(message);
+16. }
+18. public override void WriteLine(string message)
+19. {
+20. Console.WriteLine(message);
+21. }</p><ol start=24><li>public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)</li><li>{</li><li>if (this.Filter == null || this.Filter.ShouldTrace(eventCache, source, eventType, id, null, null, data, null))</li><li>{</li><li>if (data is LogEntry)</li><li>{</li><li>if (this.Formatter != null)</li><li>{</li><li>this.WriteLine(this.Formatter.Format(data as LogEntry));</li><li>}</li><li>else</li><li>{</li><li>base.TraceData(eventCache, source, eventType, id, data);</li><li>}</li><li>}</li><li>else</li><li>{</li><li>base.TraceData(eventCache, source, eventType, id, data);</li><li>}</li><li>}</li><li>}</li><li>}</li><li>}</li></ol><ul><li>This source code was highlighted with Source Code Highlighter.`</li></ul></blockquote><p>Как мне кажется, налицо недоработка разработчиков Enterprise Library. Хотя метод решения прост и в принципе естественен, но все-таки, раз есть поле для &ldquo;форматировщика&rdquo; грамотнее было бы его использовать по умолчанию.</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://alezhu.github.io/tags/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82/>Программист</a></li><li><a href=https://alezhu.github.io/tags/i%D0%BE%D0%BF%D1%8B%D1%82/>Iопыт</a></li><li><a href=https://alezhu.github.io/tags/.net/>.Net</a></li></ul><nav class=paginav><a class=prev href=https://alezhu.github.io/software/windows/2011-01-16---windows-7-service-pack-1.-%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D1%8B-%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8/><span class=title>« Предыдущая</span>
+<span>Windows 7 Service Pack 1. Проблемы установки</span>
+</a><a class=next href=https://alezhu.github.io/%D0%B6%D0%B8%D0%B7%D0%B0/2010-12-30---%D1%86%D0%B8%D1%82%D0%B0%D1%82%D0%B0-%23409156/><span class=title>Следующая »</span>
+<span>Цитата #409156</span></a></nav></footer><div class=comments-section style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)"><h3 style=margin-bottom:1.5rem>Комментарии</h3><div class=giscus></div><script src=https://giscus.app/client.js data-repo=alezhu/alezhu.github.io data-repo-id=R_kgDOVufVnQ data-category=General data-category-id=DIC_kwDOVufVnc4DLIqK data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=ru crossorigin=anonymous async>
+  </script></div></article></main><footer class=footer><span>&copy; 2026 <a href=https://alezhu.github.io/>Блог alezhu</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        
+        let menuScrollTimeout;
+        menu.addEventListener("scroll", function () {
+            clearTimeout(menuScrollTimeout);
+            menuScrollTimeout = setTimeout(function () {
+                localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+            }, 150);
+        }, { passive: true });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            const target = document.querySelector(`[id='${decodeURIComponent(id)}']`);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                target.scrollIntoView();
+            }
+            
+            
+            if (target.tabIndex < 0 && !target.hasAttribute("tabindex")) {
+                target.setAttribute("tabindex", "-1");
+            }
+            target.focus({ preventScroll: true });
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script><script>
+    var toplink = document.getElementById("top-link");
+    var scrollTicking = false;
+    
+    window.addEventListener("scroll", function () {
+        if (scrollTicking) {
+            return;
+        }
+        scrollTicking = true;
+        requestAnimationFrame(function () {
+            const scrollThreshold = window.innerHeight;
+            const shown = document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold;
+            toplink.classList.toggle("hidden", !shown);
+            scrollTicking = false;
+        });
+    }, { passive: true });
+
+</script><script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script><script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script></body></html>
