@@ -55,54 +55,56 @@ mood: "ворочу горы"
 
 Теперь добавим библиотеки JQuery и JQuery UI, для чего скачаем их с соответствующих сайтов, поместим в каталог проекта и пропишем ссылки на них в секции HEAD нашей страницы. Можно также их не качать, а прописать ссылки на Google вот так:
 
-> `1. <link href="~/css/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-> 3. <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
-> 4. <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
-> * This source code was highlighted with Source Code Highlighter.`
+```html
+<link href="~/css/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
+```
 
 Хотя JQueryUI вам все равно лучше скачать, причем версию для разработчиков, так как там идет базовый набор css. Или можно там же на сайте скачать другую тему или создать свою. Но нам для теста хватит базовой - она, как вы видите, и указана в аттрибуте link в коде выше.
 
 Так jQuery мы подключили, давайте теперь задействуем его для наших ссылок. Пишем на нашей странице в секции head следующий код:
 
-> `1. <script language="javascript" type="text/javascript">
-> 2. $(document).ready(
-> 3. function() {
-> 4. $("#showLink").click(
-> 5. ShowDialog
-> 6. );
-> 8. $("#sendLink").click(
-> 9. submitForm
-> 10. );
-> 11. }
-> 12. );
-> 14. var submitForm = function() {
-> 15. var form = window.theForm;
-> 16. if (!form) form = document.forms[0];
-> 17. if (form) form.submit();
-> 18. return false;
-> 19. }
-> 21. var ShowDialog = function() {
-> 22. var dlg = $("#dialog");
-> 23. dlg.dialog(
-> 24. {
-> 25. position: 'center',
-> 26. buttons: {
-> 27. 'Отмена': function() {
-> 28. $(this).dialog('close');
-> 29. },
-> 30. 'OK': function() {
-> 31. submitForm();
-> 32. }
-> 34. },
-> 35. modal: true,
-> 36. width: 400
-> 37. }
-> 38. );
-> 39. dlg.dialog('open');
-> 40. return false;
-> 41. }
-> 42. </script>
-> * This source code was highlighted with Source Code Highlighter.`
+```javascript
+$(document).ready(
+  function() {
+    $("#showLink").click(
+      ShowDialog
+    );
+    $("#sendLink").click(
+      submitForm
+    );
+  }
+);
+
+var submitForm = function() {
+  var form = window.theForm;
+  if (!form) form = document.forms[0];
+  if (form) form.submit();
+  return false;
+}
+
+var ShowDialog = function() {
+  var dlg = $("#dialog");
+  dlg.dialog(
+    {
+      position: 'center',
+      buttons: {
+        'Отмена': function() {
+          $(this).dialog('close');
+        },
+        'OK': function() {
+          submitForm();
+        }
+      },
+      modal: true,
+      width: 400
+    }
+  );
+  dlg.dialog('open');
+  return false;
+}
+```
 
 Здесь мы вешаем на клик ссылок вызовы функций показа диалога и отправки формы, а также определяем сами функции. Имхо все довольно прозрачно. Теперь попробуйте запустить сайт и отправить файл кнопкой Отправить и ссылкой. Все должно работать как и раньше.
 

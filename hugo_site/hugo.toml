@@ -12,6 +12,9 @@ home = ["HTML", "RSS", "JSON"]
 [markup.goldmark.renderer]
 unsafe = true
 
+[minify]
+disableJS = true
+
 [params]
 env = "production"
 description = "Личный блог alezhu"
