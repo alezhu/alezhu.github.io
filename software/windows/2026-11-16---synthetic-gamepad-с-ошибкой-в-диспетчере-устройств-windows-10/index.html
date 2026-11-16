@@ -1,0 +1,179 @@
+<!doctype html><html lang=ru dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Блог alezhu</title><meta name=keywords content="windows,windows10,xbox,геймпад,iопыт"><meta name=description content="Synthetic Gamepad с ошибкой (Код 28) в Диспетчере устройств Windows 10: что это и как исправить
+На днях открываю Диспетчер устройств (Device Manager) в Windows 10 и вижу там неопознанное устройство с жёлтым треугольником: Synthetic Gamepad. В свойствах красуется классическая ошибка:
+
+Для этого устройства не установлены драйверы. (Код 28)
+Для элемента управления или набора разделов устройства не выбран драйвер.
+
+При этом никакого нового геймпада я не подключал, а имеющиеся контроллеры работают как обычно. Первая естественная реакция — нажать «Удалить устройство». Удаляется. Но проходит немного времени (или перезагрузка) — и эта штука снова бодро висит в списке с тем же восклицательным знаком. Попытка нажать «Обновить драйвер» ожидаемо приводит к вердикту системы: «Система Windows не смогла найти драйверы для этого устройства»."><meta name=author content="alezhu"><link rel=canonical href=https://alezhu.github.io/software/windows/2026-11-16---synthetic-gamepad-%D1%81-%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%BE%D0%B9-%D0%B2-%D0%B4%D0%B8%D1%81%D0%BF%D0%B5%D1%82%D1%87%D0%B5%D1%80%D0%B5-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2-windows-10/><link crossorigin=anonymous href=/assets/css/stylesheet.6adf4b2198dfa3949d553a40860b68823301741cec8b65d1bf35224736ecdd52.css integrity="sha256-at9LIZjfo5SdVTpAhgtogjMBdBzsi2XRvzUiRzbs3VI=" rel="preload stylesheet" as=style><link rel=icon href=https://alezhu.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://alezhu.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://alezhu.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://alezhu.github.io/apple-touch-icon.png><link rel=mask-icon href=https://alezhu.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=ru href=https://alezhu.github.io/software/windows/2026-11-16---synthetic-gamepad-%D1%81-%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%BE%D0%B9-%D0%B2-%D0%B4%D0%B8%D1%81%D0%BF%D0%B5%D1%82%D1%87%D0%B5%D1%80%D0%B5-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2-windows-10/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://alezhu.github.io/software/windows/2026-11-16---synthetic-gamepad-%D1%81-%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%BE%D0%B9-%D0%B2-%D0%B4%D0%B8%D1%81%D0%BF%D0%B5%D1%82%D1%87%D0%B5%D1%80%D0%B5-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2-windows-10/"><meta property="og:site_name" content="Блог alezhu"><meta property="og:title" content="Блог alezhu"><meta property="og:description" content="Synthetic Gamepad с ошибкой (Код 28) в Диспетчере устройств Windows 10: что это и как исправить На днях открываю Диспетчер устройств (Device Manager) в Windows 10 и вижу там неопознанное устройство с жёлтым треугольником: Synthetic Gamepad. В свойствах красуется классическая ошибка:
+Для этого устройства не установлены драйверы. (Код 28) Для элемента управления или набора разделов устройства не выбран драйвер.
+При этом никакого нового геймпада я не подключал, а имеющиеся контроллеры работают как обычно. Первая естественная реакция — нажать «Удалить устройство». Удаляется. Но проходит немного времени (или перезагрузка) — и эта штука снова бодро висит в списке с тем же восклицательным знаком. Попытка нажать «Обновить драйвер» ожидаемо приводит к вердикту системы: «Система Windows не смогла найти драйверы для этого устройства»."><meta property="og:locale" content="ru"><meta property="og:type" content="article"><meta property="article:section" content="software"><meta property="article:tag" content="Windows"><meta property="article:tag" content="Windows10"><meta property="article:tag" content="Xbox"><meta property="article:tag" content="Геймпад"><meta property="article:tag" content="Iопыт"><meta name=twitter:card content="summary"><meta name=twitter:title content="Блог alezhu"><meta name=twitter:description content="Synthetic Gamepad с ошибкой (Код 28) в Диспетчере устройств Windows 10: что это и как исправить На днях открываю Диспетчер устройств (Device Manager) в Windows 10 и вижу там неопознанное устройство с жёлтым треугольником: Synthetic Gamepad. В свойствах красуется классическая ошибка:
+Для этого устройства не установлены драйверы. (Код 28) Для элемента управления или набора разделов устройства не выбран драйвер.
+При этом никакого нового геймпада я не подключал, а имеющиеся контроллеры работают как обычно. Первая естественная реакция — нажать «Удалить устройство». Удаляется. Но проходит немного времени (или перезагрузка) — и эта штука снова бодро висит в списке с тем же восклицательным знаком. Попытка нажать «Обновить драйвер» ожидаемо приводит к вердикту системы: «Система Windows не смогла найти драйверы для этого устройства»."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Software","item":"https://alezhu.github.io/software/"},{"@type":"ListItem","position":2,"name":"Windows","item":"https://alezhu.github.io/software/windows/"},{"@type":"ListItem","position":3,"name":"","item":"https://alezhu.github.io/software/windows/2026-11-16---synthetic-gamepad-%D1%81-%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%BE%D0%B9-%D0%B2-%D0%B4%D0%B8%D1%81%D0%BF%D0%B5%D1%82%D1%87%D0%B5%D1%80%D0%B5-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2-windows-10/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"","name":"","description":"Synthetic Gamepad с ошибкой (Код 28) в Диспетчере устройств Windows 10: что это и как исправить На днях открываю Диспетчер устройств (Device Manager) в Windows 10 и вижу там неопознанное устройство с жёлтым треугольником: Synthetic Gamepad. В свойствах красуется классическая ошибка:\nДля этого устройства не установлены драйверы. (Код 28) Для элемента управления или набора разделов устройства не выбран драйвер.\nПри этом никакого нового геймпада я не подключал, а имеющиеся контроллеры работают как обычно. Первая естественная реакция — нажать «Удалить устройство». Удаляется. Но проходит немного времени (или перезагрузка) — и эта штука снова бодро висит в списке с тем же восклицательным знаком. Попытка нажать «Обновить драйвер» ожидаемо приводит к вердикту системы: «Система Windows не смогла найти драйверы для этого устройства».\n","keywords":["windows","windows10","xbox","геймпад","iопыт"],"articleBody":"Synthetic Gamepad с ошибкой (Код 28) в Диспетчере устройств Windows 10: что это и как исправить На днях открываю Диспетчер устройств (Device Manager) в Windows 10 и вижу там неопознанное устройство с жёлтым треугольником: Synthetic Gamepad. В свойствах красуется классическая ошибка:\nДля этого устройства не установлены драйверы. (Код 28) Для элемента управления или набора разделов устройства не выбран драйвер.\nПри этом никакого нового геймпада я не подключал, а имеющиеся контроллеры работают как обычно. Первая естественная реакция — нажать «Удалить устройство». Удаляется. Но проходит немного времени (или перезагрузка) — и эта штука снова бодро висит в списке с тем же восклицательным знаком. Попытка нажать «Обновить драйвер» ожидаемо приводит к вердикту системы: «Система Windows не смогла найти драйверы для этого устройства».\nСтало интересно раскопать, откуда растут ноги и почему Microsoft подсунула такое «счастье».\nОткуда ноги растут: расследование Смотрим свойства устройства:\nИмя: Synthetic Gamepad ИД оборудования (Hardware ID): SYNTHETICGamepad ИД экземпляра устройства (Device Instance Path): SWD\\SYNTHETICGAMEPADENUM\\SYNTHETICGAMEPAD0 Префикс SWD\\ сразу намекает: перед нами Software Device (программно эмулируемое устройство). Значит, в системе работает какая-то служба или драйвер, который настойчиво создаёт эту виртуальную шину.\nЛезем в журнал установки драйверов C:\\Windows\\inf\\setupapi.dev.log и смотрим события по SYNTHETICGamepad. Находим интереснейшую картину:\nВ начале ноября через Microsoft Store в фоновом режиме обновился пакет «Службы игр» (Microsoft Gaming Services) до версии 39.118.30001.0. В процессе установки этот пакет тихо накатил Windows Installer пакет XboxService.msi, который зарегистрировал службу XBOX Input Service (XboxService, исполняемый файл: C:\\Program Files\\XboxService\\x64\\XboxService.exe). При установке выполнилась команда: pnputil.exe /add-driver \"C:\\Program Files\\XboxService\\x64\\SynthGpDriver\\synthgpdriver.inf\" /install Эта служба отвечает за XBOX Synthetic Gamepad Bus — виртуальную шину для эмуляции контроллеров Xbox, предназначенную для облачного гейминга (Xbox Cloud Gaming), режима виртуального мышиного курсора на портативных консолях вроде ROG Ally и расширений современного стека GameInput. Служба XboxService запускается в автозапуске и регистрирует в системе виртуальное устройство Synthetic Gamepad. В чём же баг Microsoft? А вот тут самое забавное. Открываем установленный файл драйвера C:\\Program Files\\XboxService\\x64\\SynthGpDriver\\synthgpdriver.inf (в хранилище драйверов Windows он прописался как один из oem*.inf) и читаем секцию совместимости:\n[Manufacturer] ; This driver package is only installable on Win11+ %ManufacturerName% = Standard,NTamd64.10.0...22000 ; wudfrd.inf introduced in build 22000 [Standard.NTamd64.10.0...22000] %DeviceName% = SynthGpDriver, SYNTHETICGAMEPAD %SyntheticHidDeviceName%=Synthetic_Hid, HID\\VID_045E\u0026PID_0B09\u0026IG_00 Смотрите на комментарий самих разработчиков Microsoft:\n; This driver package is only installable on Win11+\nСборка 22000 — это релизная версия Windows 11! А на рабочей машине установлена Windows 10 (билд 19045).\nТо есть Microsoft:\nВыпустила обновление Gaming Services и службу XboxService в том числе для пользователей Windows 10. Служба XboxService запускается и честно создаёт устройство SYNTHETICGamepad. Windows 10 пытается привязать к нему свежеустановленный драйвер synthgpdriver.inf. Но SetupAPI видит требование NTamd64.10.0...22000, понимает, что текущая Windows 10 (19045) не подходит под фильтр сборки \u003e= 22000, и выдаёт в лог: dvi: {Select Best Driver} ! dvi: Selecting driver failed(0xe0000228) ! dvi: Error 0xe0000228: There are no compatible drivers for this device. Итог: устройство зависает в состоянии Код 28 (CM_PROB_FAILED_INSTALL). А так как служба XboxService крутится в фоне постоянно, простое удаление устройства из Диспетчера устройств не помогает — служба создаёт его заново при следующей проверке/загрузке. Классическая несогласованность отделов в Редмонде: сервис накатили на все поддерживаемые винды, а драйвер ограничили только одиннадцатой.\nКак исправить На работу реальных геймпадов (подключенных по проводу или Bluetooth) эта синтетическая шина никак не влияет — они работают через стандартные драйверы XInput/HID.\nПоэтому самое простое и чистое решение — остановить и отключить службу XboxService и удалить висящее виртуальное устройство.\nЗапускаем PowerShell от имени Администратора и выполняем три строчки:\n# Останавливаем службу эмуляции XBOX Input Service Stop-Service XboxService -Force # Отключаем автозапуск службы Set-Service XboxService -StartupType Disabled # Удаляем фантомное устройство из PnP pnputil /remove-device \"SWD\\SYNTHETICGAMEPADENUM\\SYNTHETICGAMEPAD0\" После этого:\nОшибка мгновенно пропадает из Диспетчера устройств. При перезагрузке служба больше не стартует и виртуальный девайс заново не спавнится. Если вдруг когда-то в будущем вам понадобится вернуть службу обратно:\nSet-Service XboxService -StartupType Automatic Start-Service XboxService (хотя до тех пор, пока Microsoft не исправит секцию [Manufacturer] для Windows 10 в обновлениях Gaming Services, устройство вернется ровно с той же ошибкой Код 28).\n","wordCount":"645","inLanguage":"ru","datePublished":"0001-01-01T00:00:00Z","dateModified":"0001-01-01T00:00:00Z","author":{"@type":"Person","name":"alezhu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://alezhu.github.io/software/windows/2026-11-16---synthetic-gamepad-%D1%81-%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%BE%D0%B9-%D0%B2-%D0%B4%D0%B8%D1%81%D0%BF%D0%B5%D1%82%D1%87%D0%B5%D1%80%D0%B5-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2-windows-10/"},"publisher":{"@type":"Organization","name":"Блог alezhu","logo":{"@type":"ImageObject","url":"https://alezhu.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://alezhu.github.io/ accesskey=h title="Блог alezhu (Alt + H)">Блог alezhu</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/ title=Программирование><span>Программирование</span></a></li><li><a href=https://alezhu.github.io/hardware/ title=Hardware><span>Hardware</span></a></li><li><a href=https://alezhu.github.io/software/ title=Software><span>Software</span></a></li><li><a href=https://alezhu.github.io/%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/ title=Электроника><span>Электроника</span></a></li><li><a href=https://alezhu.github.io/%D0%B0%D0%B2%D1%82%D0%BE-%D0%BC%D0%BE%D1%82%D0%BE/ title=Авто-мото><span>Авто-мото</span></a></li><li><a href=https://alezhu.github.io/%D0%B6%D0%B8%D0%B7%D0%B0/ title=Жиза><span>Жиза</span></a></li><li><a href=https://alezhu.github.io/archives/ title=Архив><span>Архив</span></a></li><li><a href=https://alezhu.github.io/search/ title="Поиск (Alt + /)" accesskey=/><span>Поиск</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><nav class=breadcrumbs role=navigation aria-label=Breadcrumb><a href=/>Главная</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>
+<a href=/software/>Software</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>
+<a href=/software/windows/>Windows</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg></nav><h1 class="post-title entry-hint-parent"></h1><div class=post-meta><span>4 минуты</span>&nbsp;·&nbsp;<span>alezhu</span></div></header><div class="post-content md-content"><h1 id=synthetic-gamepad-с-ошибкой-код-28-в-диспетчере-устройств-windows-10-что-это-и-как-исправить>Synthetic Gamepad с ошибкой (Код 28) в Диспетчере устройств Windows 10: что это и как исправить<a hidden class=anchor aria-hidden=true href=#synthetic-gamepad-с-ошибкой-код-28-в-диспетчере-устройств-windows-10-что-это-и-как-исправить>#</a></h1><p>На днях открываю Диспетчер устройств (Device Manager) в Windows 10 и вижу там неопознанное устройство с жёлтым треугольником: <strong>Synthetic Gamepad</strong>. В свойствах красуется классическая ошибка:</p><blockquote><p>Для этого устройства не установлены драйверы. (Код 28)
+Для элемента управления или набора разделов устройства не выбран драйвер.</p></blockquote><p>При этом никакого нового геймпада я не подключал, а имеющиеся контроллеры работают как обычно. Первая естественная реакция — нажать «Удалить устройство». Удаляется. Но проходит немного времени (или перезагрузка) — и эта штука снова бодро висит в списке с тем же восклицательным знаком. Попытка нажать «Обновить драйвер» ожидаемо приводит к вердикту системы: <em>«Система Windows не смогла найти драйверы для этого устройства»</em>.</p><p>Стало интересно раскопать, откуда растут ноги и почему Microsoft подсунула такое «счастье».</p><hr><h2 id=откуда-ноги-растут-расследование>Откуда ноги растут: расследование<a hidden class=anchor aria-hidden=true href=#откуда-ноги-растут-расследование>#</a></h2><p>Смотрим свойства устройства:</p><ul><li><strong>Имя:</strong> Synthetic Gamepad</li><li><strong>ИД оборудования (Hardware ID):</strong> <code>SYNTHETICGamepad</code></li><li><strong>ИД экземпляра устройства (Device Instance Path):</strong> <code>SWD\SYNTHETICGAMEPADENUM\SYNTHETICGAMEPAD0</code></li></ul><p>Префикс <code>SWD\</code> сразу намекает: перед нами <strong>Software Device</strong> (программно эмулируемое устройство). Значит, в системе работает какая-то служба или драйвер, который настойчиво создаёт эту виртуальную шину.</p><p>Лезем в журнал установки драйверов <code>C:\Windows\inf\setupapi.dev.log</code> и смотрим события по <code>SYNTHETICGamepad</code>. Находим интереснейшую картину:</p><ol><li>В начале ноября через Microsoft Store в фоновом режиме обновился пакет <strong>«Службы игр» (Microsoft Gaming Services)</strong> до версии <code>39.118.30001.0</code>.</li><li>В процессе установки этот пакет тихо накатил Windows Installer пакет <code>XboxService.msi</code>, который зарегистрировал службу <strong>XBOX Input Service</strong> (<code>XboxService</code>, исполняемый файл: <code>C:\Program Files\XboxService\x64\XboxService.exe</code>).</li><li>При установке выполнилась команда:<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cmd data-lang=cmd><span style=display:flex><span>pnputil.exe /add-driver <span style=color:#e6db74>&#34;C:\Program Files\XboxService\x64\SynthGpDriver\synthgpdriver.inf&#34;</span> /install
+</span></span></code></pre></div></li><li>Эта служба отвечает за <strong>XBOX Synthetic Gamepad Bus</strong> — виртуальную шину для эмуляции контроллеров Xbox, предназначенную для облачного гейминга (Xbox Cloud Gaming), режима виртуального мышиного курсора на портативных консолях вроде ROG Ally и расширений современного стека GameInput.</li><li>Служба <code>XboxService</code> запускается в автозапуске и регистрирует в системе виртуальное устройство <code>Synthetic Gamepad</code>.</li></ol><hr><h2 id=в-чём-же-баг-microsoft>В чём же баг Microsoft?<a hidden class=anchor aria-hidden=true href=#в-чём-же-баг-microsoft>#</a></h2><p>А вот тут самое забавное. Открываем установленный файл драйвера <code>C:\Program Files\XboxService\x64\SynthGpDriver\synthgpdriver.inf</code> (в хранилище драйверов Windows он прописался как один из <code>oem*.inf</code>) и читаем секцию совместимости:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-ini data-lang=ini><span style=display:flex><span><span style=color:#66d9ef>[Manufacturer]</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>; This driver package is only installable on Win11+</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>%ManufacturerName%</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>Standard,NTamd64.10.0...22000 ; wudfrd.inf introduced in build 22000</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>[Standard.NTamd64.10.0...22000]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>%DeviceName%</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>SynthGpDriver, SYNTHETICGAMEPAD</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>%SyntheticHidDeviceName%</span><span style=color:#f92672>=</span><span style=color:#e6db74>Synthetic_Hid, HID\VID_045E&amp;PID_0B09&amp;IG_00</span>
+</span></span></code></pre></div><p>Смотрите на комментарий самих разработчиков Microsoft:</p><blockquote><p><code>; This driver package is only installable on Win11+</code></p></blockquote><p>Сборка <strong>22000</strong> — это релизная версия <strong>Windows 11</strong>! А на рабочей машине установлена <strong>Windows 10</strong> (билд 19045).</p><p>То есть Microsoft:</p><ul><li>Выпустила обновление Gaming Services и службу <code>XboxService</code> в том числе для пользователей Windows 10.</li><li>Служба <code>XboxService</code> запускается и честно создаёт устройство <code>SYNTHETICGamepad</code>.</li><li>Windows 10 пытается привязать к нему свежеустановленный драйвер <code>synthgpdriver.inf</code>.</li><li>Но SetupAPI видит требование <code>NTamd64.10.0...22000</code>, понимает, что текущая Windows 10 (19045) не подходит под фильтр сборки <code>>= 22000</code>, и выдаёт в лог:<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span>dvi: {Select Best Driver}
+</span></span><span style=display:flex><span>! dvi: Selecting driver failed(0xe0000228)
+</span></span><span style=display:flex><span>! dvi: Error 0xe0000228: There are no compatible drivers for this device.
+</span></span></code></pre></div></li><li>Итог: устройство зависает в состоянии <strong>Код 28 (CM_PROB_FAILED_INSTALL)</strong>. А так как служба <code>XboxService</code> крутится в фоне постоянно, простое удаление устройства из Диспетчера устройств не помогает — служба создаёт его заново при следующей проверке/загрузке.</li></ul><p>Классическая несогласованность отделов в Редмонде: сервис накатили на все поддерживаемые винды, а драйвер ограничили только одиннадцатой.</p><hr><h2 id=как-исправить>Как исправить<a hidden class=anchor aria-hidden=true href=#как-исправить>#</a></h2><p>На работу реальных геймпадов (подключенных по проводу или Bluetooth) эта синтетическая шина никак не влияет — они работают через стандартные драйверы XInput/HID.</p><p>Поэтому самое простое и чистое решение — остановить и отключить службу <code>XboxService</code> и удалить висящее виртуальное устройство.</p><p>Запускаем <strong>PowerShell от имени Администратора</strong> и выполняем три строчки:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-powershell data-lang=powershell><span style=display:flex><span><span style=color:#75715e># Останавливаем службу эмуляции XBOX Input Service</span>
+</span></span><span style=display:flex><span>Stop-Service XboxService -Force
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Отключаем автозапуск службы</span>
+</span></span><span style=display:flex><span>Set-Service XboxService -StartupType Disabled
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Удаляем фантомное устройство из PnP</span>
+</span></span><span style=display:flex><span>pnputil /remove-device <span style=color:#e6db74>&#34;SWD\SYNTHETICGAMEPADENUM\SYNTHETICGAMEPAD0&#34;</span>
+</span></span></code></pre></div><p>После этого:</p><ol><li>Ошибка мгновенно пропадает из Диспетчера устройств.</li><li>При перезагрузке служба больше не стартует и виртуальный девайс заново не спавнится.</li></ol><p>Если вдруг когда-то в будущем вам понадобится вернуть службу обратно:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-powershell data-lang=powershell><span style=display:flex><span>Set-Service XboxService -StartupType Automatic
+</span></span><span style=display:flex><span>Start-Service XboxService
+</span></span></code></pre></div><p><em>(хотя до тех пор, пока Microsoft не исправит секцию <code>[Manufacturer]</code> для Windows 10 в обновлениях Gaming Services, устройство вернется ровно с той же ошибкой Код 28).</em></p></div><footer class=post-footer><ul class=post-tags><li><a href=https://alezhu.github.io/tags/windows/>Windows</a></li><li><a href=https://alezhu.github.io/tags/windows10/>Windows10</a></li><li><a href=https://alezhu.github.io/tags/xbox/>Xbox</a></li><li><a href=https://alezhu.github.io/tags/%D0%B3%D0%B5%D0%B9%D0%BC%D0%BF%D0%B0%D0%B4/>Геймпад</a></li><li><a href=https://alezhu.github.io/tags/i%D0%BE%D0%BF%D1%8B%D1%82/>Iопыт</a></li></ul><nav class=paginav><a class=prev href=https://alezhu.github.io/software/windows/2025-11-18---virtualbox--%D0%B8-nem-%D0%BD%D0%B0-windows-11-iot-%D0%BA%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2%D0%BD%D0%B0%D1%8F--ltsc/><span class=title>« Предыдущая</span>
+<span></span>
+</a><a class=next href=https://alezhu.github.io/%D0%B0%D0%B2%D1%82%D0%BE-%D0%BC%D0%BE%D1%82%D0%BE/2006-04-10---%D0%BC%D0%B8%D1%80-%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8F-2006.-%D1%84%D0%BE%D1%82%D0%BE%D0%BE%D1%82%D1%87%D0%B5%D1%82/><span class=title>Следующая »</span>
+<span></span></a></nav></footer><div class=comments-section style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)"><h3 style=margin-bottom:1.5rem>Комментарии</h3><div class=giscus></div><script src=https://giscus.app/client.js data-repo=alezhu/alezhu.github.io data-repo-id=R_kgDOVufVnQ data-category=General data-category-id=DIC_kwDOVufVnc4DLIqK data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=ru crossorigin=anonymous async>
+  </script></div></article></main><footer class=footer><span>&copy; 2026 <a href=https://alezhu.github.io/>Блог alezhu</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        
+        let menuScrollTimeout;
+        menu.addEventListener("scroll", function () {
+            clearTimeout(menuScrollTimeout);
+            menuScrollTimeout = setTimeout(function () {
+                localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+            }, 150);
+        }, { passive: true });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            const target = document.querySelector(`[id='${decodeURIComponent(id)}']`);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                target.scrollIntoView();
+            }
+            
+            
+            if (target.tabIndex < 0 && !target.hasAttribute("tabindex")) {
+                target.setAttribute("tabindex", "-1");
+            }
+            target.focus({ preventScroll: true });
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script><script>
+    var toplink = document.getElementById("top-link");
+    var scrollTicking = false;
+    
+    window.addEventListener("scroll", function () {
+        if (scrollTicking) {
+            return;
+        }
+        scrollTicking = true;
+        requestAnimationFrame(function () {
+            const scrollThreshold = window.innerHeight;
+            const shown = document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold;
+            toplink.classList.toggle("hidden", !shown);
+            scrollTicking = false;
+        });
+    }, { passive: true });
+
+</script><script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script><script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script></body></html>
