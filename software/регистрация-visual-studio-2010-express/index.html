@@ -1,0 +1,156 @@
+<!doctype html><html lang=ru dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Регистрация Visual Studio 2010 Express | Блог alezhu</title><meta name=keywords content><meta name=description content="Регистрация Visual Studio 2010 Express
+12 апреля вышла финальная версия Visual Studio 2010. Одновременно с выходом &ldquo;больших&rdquo; версий были выпущены бесплатные версии в редакции Express. Версии бесплатные, но требуют ввода ключа, который можно получить на сайте Microsoft.
+Процесс расписан в картинках на самом сайте здесь http://www.microsoft.com/express/support/regins/
+Я таким образом спокойно зарегистрировал VS2010 C# Express.
+Но как я узнал от @rwsh с какого-то момента работать это перестало. Действительно, попробовав зарегистрировать Visual Web Developer 2010 Express, я получил тот же самый результат - ключа не было.
+Но немного поэксперементировав я все же нашел решение. Заключается оно в следующем - когда вы заполняете анкету, необходимо поменять вывод страницы на английский язык. Для этого в строке браузера в самом конце адреса открытой страницы находите строку &ldquo;&amp;lcid=1049&rdquo; - это если у вас русский язык. Далее меняете lcid на 1033 (то есть должно получиться &ldquo;&amp;lcid=1033&rdquo;) и нажимаете Enter. Это приведет к перезагрузке страницы с анкетой, но уже на английском языке. После этого отправляете анкету, нажав внизу страницы кнопку &ldquo;Продолжить&rdquo;, и попадаете на страницу с благодарностями за регистрацию и ключом.
+ЗЫ. Никто не в курсе что удалить в реестре, чтобы эта регистрация пропала?"><meta name=author content="alezhu"><link rel=canonical href=https://alezhu.github.io/software/%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F-visual-studio-2010-express/><link crossorigin=anonymous href=/assets/css/stylesheet.6adf4b2198dfa3949d553a40860b68823301741cec8b65d1bf35224736ecdd52.css integrity="sha256-at9LIZjfo5SdVTpAhgtogjMBdBzsi2XRvzUiRzbs3VI=" rel="preload stylesheet" as=style><link rel=icon href=https://alezhu.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://alezhu.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://alezhu.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://alezhu.github.io/apple-touch-icon.png><link rel=mask-icon href=https://alezhu.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=ru href=https://alezhu.github.io/software/%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F-visual-studio-2010-express/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://alezhu.github.io/software/%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F-visual-studio-2010-express/"><meta property="og:site_name" content="Блог alezhu"><meta property="og:title" content="Регистрация Visual Studio 2010 Express"><meta property="og:description" content="Регистрация Visual Studio 2010 Express 12 апреля вышла финальная версия Visual Studio 2010. Одновременно с выходом “больших” версий были выпущены бесплатные версии в редакции Express. Версии бесплатные, но требуют ввода ключа, который можно получить на сайте Microsoft. Процесс расписан в картинках на самом сайте здесь http://www.microsoft.com/express/support/regins/ Я таким образом спокойно зарегистрировал VS2010 C# Express. Но как я узнал от @rwsh с какого-то момента работать это перестало. Действительно, попробовав зарегистрировать Visual Web Developer 2010 Express, я получил тот же самый результат - ключа не было. Но немного поэксперементировав я все же нашел решение. Заключается оно в следующем - когда вы заполняете анкету, необходимо поменять вывод страницы на английский язык. Для этого в строке браузера в самом конце адреса открытой страницы находите строку “&amp;lcid=1049” - это если у вас русский язык. Далее меняете lcid на 1033 (то есть должно получиться “&amp;lcid=1033”) и нажимаете Enter. Это приведет к перезагрузке страницы с анкетой, но уже на английском языке. После этого отправляете анкету, нажав внизу страницы кнопку “Продолжить”, и попадаете на страницу с благодарностями за регистрацию и ключом. ЗЫ. Никто не в курсе что удалить в реестре, чтобы эта регистрация пропала?"><meta property="og:locale" content="ru"><meta property="og:type" content="article"><meta property="article:section" content="software"><meta property="article:published_time" content="2010-04-23T00:00:00+00:00"><meta property="article:modified_time" content="2010-04-23T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Регистрация Visual Studio 2010 Express"><meta name=twitter:description content="Регистрация Visual Studio 2010 Express 12 апреля вышла финальная версия Visual Studio 2010. Одновременно с выходом “больших” версий были выпущены бесплатные версии в редакции Express. Версии бесплатные, но требуют ввода ключа, который можно получить на сайте Microsoft. Процесс расписан в картинках на самом сайте здесь http://www.microsoft.com/express/support/regins/ Я таким образом спокойно зарегистрировал VS2010 C# Express. Но как я узнал от @rwsh с какого-то момента работать это перестало. Действительно, попробовав зарегистрировать Visual Web Developer 2010 Express, я получил тот же самый результат - ключа не было. Но немного поэксперементировав я все же нашел решение. Заключается оно в следующем - когда вы заполняете анкету, необходимо поменять вывод страницы на английский язык. Для этого в строке браузера в самом конце адреса открытой страницы находите строку “&amp;lcid=1049” - это если у вас русский язык. Далее меняете lcid на 1033 (то есть должно получиться “&amp;lcid=1033”) и нажимаете Enter. Это приведет к перезагрузке страницы с анкетой, но уже на английском языке. После этого отправляете анкету, нажав внизу страницы кнопку “Продолжить”, и попадаете на страницу с благодарностями за регистрацию и ключом. ЗЫ. Никто не в курсе что удалить в реестре, чтобы эта регистрация пропала?"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Software","item":"https://alezhu.github.io/software/"},{"@type":"ListItem","position":2,"name":"","item":"https://alezhu.github.io/software/%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F-visual-studio-2010-express/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Регистрация Visual Studio 2010 Express","name":"Регистрация Visual Studio 2010 Express","description":"Регистрация Visual Studio 2010 Express 12 апреля вышла финальная версия Visual Studio 2010. Одновременно с выходом \u0026ldquo;больших\u0026rdquo; версий были выпущены бесплатные версии в редакции Express. Версии бесплатные, но требуют ввода ключа, который можно получить на сайте Microsoft. Процесс расписан в картинках на самом сайте здесь http://www.microsoft.com/express/support/regins/ Я таким образом спокойно зарегистрировал VS2010 C# Express. Но как я узнал от @rwsh с какого-то момента работать это перестало. Действительно, попробовав зарегистрировать Visual Web Developer 2010 Express, я получил тот же самый результат - ключа не было. Но немного поэксперементировав я все же нашел решение. Заключается оно в следующем - когда вы заполняете анкету, необходимо поменять вывод страницы на английский язык. Для этого в строке браузера в самом конце адреса открытой страницы находите строку \u0026ldquo;\u0026amp;lcid=1049\u0026rdquo; - это если у вас русский язык. Далее меняете lcid на 1033 (то есть должно получиться \u0026ldquo;\u0026amp;lcid=1033\u0026rdquo;) и нажимаете Enter. Это приведет к перезагрузке страницы с анкетой, но уже на английском языке. После этого отправляете анкету, нажав внизу страницы кнопку \u0026ldquo;Продолжить\u0026rdquo;, и попадаете на страницу с благодарностями за регистрацию и ключом. ЗЫ. Никто не в курсе что удалить в реестре, чтобы эта регистрация пропала?\n","keywords":[],"articleBody":"Регистрация Visual Studio 2010 Express 12 апреля вышла финальная версия Visual Studio 2010. Одновременно с выходом “больших” версий были выпущены бесплатные версии в редакции Express. Версии бесплатные, но требуют ввода ключа, который можно получить на сайте Microsoft. Процесс расписан в картинках на самом сайте здесь http://www.microsoft.com/express/support/regins/ Я таким образом спокойно зарегистрировал VS2010 C# Express. Но как я узнал от @rwsh с какого-то момента работать это перестало. Действительно, попробовав зарегистрировать Visual Web Developer 2010 Express, я получил тот же самый результат - ключа не было. Но немного поэксперементировав я все же нашел решение. Заключается оно в следующем - когда вы заполняете анкету, необходимо поменять вывод страницы на английский язык. Для этого в строке браузера в самом конце адреса открытой страницы находите строку “\u0026lcid=1049” - это если у вас русский язык. Далее меняете lcid на 1033 (то есть должно получиться “\u0026lcid=1033”) и нажимаете Enter. Это приведет к перезагрузке страницы с анкетой, но уже на английском языке. После этого отправляете анкету, нажав внизу страницы кнопку “Продолжить”, и попадаете на страницу с благодарностями за регистрацию и ключом. ЗЫ. Никто не в курсе что удалить в реестре, чтобы эта регистрация пропала?\n","wordCount":"186","inLanguage":"ru","datePublished":"2010-04-23T00:00:00Z","dateModified":"2010-04-23T00:00:00Z","author":{"@type":"Person","name":"alezhu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://alezhu.github.io/software/%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F-visual-studio-2010-express/"},"publisher":{"@type":"Organization","name":"Блог alezhu","logo":{"@type":"ImageObject","url":"https://alezhu.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://alezhu.github.io/ accesskey=h title="Блог alezhu (Alt + H)">Блог alezhu</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/ title=Программирование><span>Программирование</span></a></li><li><a href=https://alezhu.github.io/hardware/ title=Hardware><span>Hardware</span></a></li><li><a href=https://alezhu.github.io/software/ title=Software><span>Software</span></a></li><li><a href=https://alezhu.github.io/%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/ title=Электроника><span>Электроника</span></a></li><li><a href=https://alezhu.github.io/%D0%B0%D0%B2%D1%82%D0%BE-%D0%BC%D0%BE%D1%82%D0%BE/ title=Авто-мото><span>Авто-мото</span></a></li><li><a href=https://alezhu.github.io/%D0%B6%D0%B8%D0%B7%D0%B0/ title=Жиза><span>Жиза</span></a></li><li><a href=https://alezhu.github.io/archives/ title=Архив><span>Архив</span></a></li><li><a href=https://alezhu.github.io/search/ title="Поиск (Alt + /)" accesskey=/><span>Поиск</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><nav class=breadcrumbs role=navigation aria-label=Breadcrumb><a href=/>Главная</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>
+<a href=/software/>Software</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg></nav><h1 class="post-title entry-hint-parent">Регистрация Visual Studio 2010 Express</h1><div class=post-meta><span title=2010-04-23T00:00:00+00:00>23 апреля 2010 г.</span>&nbsp;·&nbsp;<span>1 минута</span>&nbsp;·&nbsp;<span>alezhu</span></div></header><div class="post-content md-content"><h1 id=регистрация-visual-studio-2010-express>Регистрация Visual Studio 2010 Express<a hidden class=anchor aria-hidden=true href=#регистрация-visual-studio-2010-express>#</a></h1><p>12 апреля вышла финальная версия Visual Studio 2010. Одновременно с выходом &ldquo;больших&rdquo; версий были выпущены бесплатные версии в редакции Express. Версии бесплатные, но требуют ввода ключа, который можно получить на сайте Microsoft.
+Процесс расписан в картинках на самом сайте здесь <a href=http://www.microsoft.com/express/support/regins/>http://www.microsoft.com/express/support/regins/</a>
+Я таким образом спокойно зарегистрировал VS2010 C# Express.
+Но как я узнал от <a href=http://twitter.com/rwsh/status/12708927891>@rwsh</a> с какого-то момента работать это перестало. Действительно, попробовав зарегистрировать Visual Web Developer 2010 Express, я получил тот же самый результат - ключа не было.
+Но немного поэксперементировав я все же нашел решение. Заключается оно в следующем - когда вы заполняете анкету, необходимо поменять вывод страницы на английский язык. Для этого в строке браузера в самом конце адреса открытой страницы находите строку &ldquo;&amp;lcid=1049&rdquo; - это если у вас русский язык. Далее меняете lcid на 1033 (то есть должно получиться &ldquo;&amp;lcid=1033&rdquo;) и нажимаете Enter. Это приведет к перезагрузке страницы с анкетой, но уже на английском языке. После этого отправляете анкету, нажав внизу страницы кнопку &ldquo;Продолжить&rdquo;, и попадаете на страницу с благодарностями за регистрацию и ключом.
+ЗЫ. Никто не в курсе что удалить в реестре, чтобы эта регистрация пропала?</p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/%D1%81%D0%B4%D0%B2%D0%B8%D0%B3-%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%B2-%D0%B2-%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%BD%D1%8B%D1%85-%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%D1%85/><span class=title>« Предыдущая</span>
+<span>Сдвиг параметров в командных файлах</span>
+</a><a class=next href=https://alezhu.github.io/software/skype-%D0%BD%D0%B5-%D1%81%D0%B2%D0%BE%D1%80%D0%B0%D1%87%D0%B8%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F-%D0%B2-%D1%82%D1%80%D0%B5%D0%B9-%D0%B2-windows-7/><span class=title>Следующая »</span>
+<span>Skype не сворачивается в трей в Windows 7</span></a></nav></footer><div class=comments-section style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)"><h3 style=margin-bottom:1.5rem>Комментарии</h3><div class=giscus></div><script src=https://giscus.app/client.js data-repo=alezhu/alezhu.github.io data-repo-id=R_kgDOVufVnQ data-category=General data-category-id=DIC_kwDOVufVnc4DLIqK data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=ru crossorigin=anonymous async>
+  </script></div></article></main><footer class=footer><span>&copy; 2026 <a href=https://alezhu.github.io/>Блог alezhu</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        
+        let menuScrollTimeout;
+        menu.addEventListener("scroll", function () {
+            clearTimeout(menuScrollTimeout);
+            menuScrollTimeout = setTimeout(function () {
+                localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+            }, 150);
+        }, { passive: true });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            const target = document.querySelector(`[id='${decodeURIComponent(id)}']`);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                target.scrollIntoView();
+            }
+            
+            
+            if (target.tabIndex < 0 && !target.hasAttribute("tabindex")) {
+                target.setAttribute("tabindex", "-1");
+            }
+            target.focus({ preventScroll: true });
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script><script>
+    var toplink = document.getElementById("top-link");
+    var scrollTicking = false;
+    
+    window.addEventListener("scroll", function () {
+        if (scrollTicking) {
+            return;
+        }
+        scrollTicking = true;
+        requestAnimationFrame(function () {
+            const scrollThreshold = window.innerHeight;
+            const shown = document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold;
+            toplink.classList.toggle("hidden", !shown);
+            scrollTicking = false;
+        });
+    }, { passive: true });
+
+</script><script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script><script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script></body></html>

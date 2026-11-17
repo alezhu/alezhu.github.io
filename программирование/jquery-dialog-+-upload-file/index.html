@@ -1,0 +1,219 @@
+<!doctype html><html lang=ru dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>jQuery Dialog + Upload file | Блог alezhu</title><meta name=keywords content="программист,jquery,.net,asp.net"><meta name=description content="jQuery Dialog + Upload file
+Столкнулся с занятным глюком. Мне нужно было при клике на ссылку показать модальный диалог с полем для загрузки файла и после нажатия OK отправить это файл на сервер. Дабы не изобретать велосипед, для показа диалога решил воспользоваться jQuery и соответственно jQuery UI Dialog. Но все оказалось немного сложнее.
+Но давайте поподробнее с самого начала и с примерами чтобы прочувствовать все самим =). Для серверной части я использую обычный ASP.NET и файл буду грузить обычной синхронной отправкой без всяких там AJAX."><meta name=author content="alezhu"><link rel=canonical href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/jquery-dialog-+-upload-file/><link crossorigin=anonymous href=/assets/css/stylesheet.6adf4b2198dfa3949d553a40860b68823301741cec8b65d1bf35224736ecdd52.css integrity="sha256-at9LIZjfo5SdVTpAhgtogjMBdBzsi2XRvzUiRzbs3VI=" rel="preload stylesheet" as=style><link rel=icon href=https://alezhu.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://alezhu.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://alezhu.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://alezhu.github.io/apple-touch-icon.png><link rel=mask-icon href=https://alezhu.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=ru href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/jquery-dialog-+-upload-file/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/jquery-dialog-+-upload-file/"><meta property="og:site_name" content="Блог alezhu"><meta property="og:title" content="jQuery Dialog + Upload file"><meta property="og:description" content="jQuery Dialog + Upload file Столкнулся с занятным глюком. Мне нужно было при клике на ссылку показать модальный диалог с полем для загрузки файла и после нажатия OK отправить это файл на сервер. Дабы не изобретать велосипед, для показа диалога решил воспользоваться jQuery и соответственно jQuery UI Dialog. Но все оказалось немного сложнее.
+Но давайте поподробнее с самого начала и с примерами чтобы прочувствовать все самим =). Для серверной части я использую обычный ASP.NET и файл буду грузить обычной синхронной отправкой без всяких там AJAX."><meta property="og:locale" content="ru"><meta property="og:type" content="article"><meta property="article:section" content="программирование"><meta property="article:published_time" content="2009-11-15T00:00:00+00:00"><meta property="article:modified_time" content="2009-11-15T00:00:00+00:00"><meta property="article:tag" content="Программист"><meta property="article:tag" content="Jquery"><meta property="article:tag" content=".Net"><meta property="article:tag" content="Asp.net"><meta name=twitter:card content="summary"><meta name=twitter:title content="jQuery Dialog + Upload file"><meta name=twitter:description content="jQuery Dialog + Upload file Столкнулся с занятным глюком. Мне нужно было при клике на ссылку показать модальный диалог с полем для загрузки файла и после нажатия OK отправить это файл на сервер. Дабы не изобретать велосипед, для показа диалога решил воспользоваться jQuery и соответственно jQuery UI Dialog. Но все оказалось немного сложнее.
+Но давайте поподробнее с самого начала и с примерами чтобы прочувствовать все самим =). Для серверной части я использую обычный ASP.NET и файл буду грузить обычной синхронной отправкой без всяких там AJAX."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"","item":"https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/jquery-dialog-+-upload-file/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"jQuery Dialog + Upload file","name":"jQuery Dialog \u002b Upload file","description":"jQuery Dialog + Upload file Столкнулся с занятным глюком. Мне нужно было при клике на ссылку показать модальный диалог с полем для загрузки файла и после нажатия OK отправить это файл на сервер. Дабы не изобретать велосипед, для показа диалога решил воспользоваться jQuery и соответственно jQuery UI Dialog. Но все оказалось немного сложнее.\nНо давайте поподробнее с самого начала и с примерами чтобы прочувствовать все самим =). Для серверной части я использую обычный ASP.NET и файл буду грузить обычной синхронной отправкой без всяких там AJAX.\n","keywords":["программист","jquery",".net","asp.net"],"articleBody":"jQuery Dialog + Upload file Столкнулся с занятным глюком. Мне нужно было при клике на ссылку показать модальный диалог с полем для загрузки файла и после нажатия OK отправить это файл на сервер. Дабы не изобретать велосипед, для показа диалога решил воспользоваться jQuery и соответственно jQuery UI Dialog. Но все оказалось немного сложнее.\nНо давайте поподробнее с самого начала и с примерами чтобы прочувствовать все самим =). Для серверной части я использую обычный ASP.NET и файл буду грузить обычной синхронной отправкой без всяких там AJAX.\nИтак, создадим в Visual Studio обычный WebSite. На Default.aspx поместим ссылку, Label, FileUpload, кнопку отправки формы и еще одну ссылку. Label нам нужен для вывода имени загруженного файла, первая ссылка - для показа диалога, вторая - для отправки формы через JavaScript (только в качестве примера) и кнопка отправки формы для проверки того, что отправка работает. Причем FileUpload обернем в div с id=“dialog” - это и будет в дальнейшем содержимое нашего диалога. Код страницы будет примерно таким:\n`1. 2. 3. 4. For show dialog click this link. 5. 6. 7. 8. 9. For upload file click this link. 10. 11. This source code was highlighted with Source Code Highlighter.` Далее в методе Page_Load пишем такой код:\n`1. protected void Page_Load(object sender, EventArgs e) 2. { 3. if (IsPostBack) 4. { 5. if (this.FileUpload1.HasFile) 6. { 7. Label1.Text = string.Format(“You files name is {0}.”, FileUpload1.FileName); 8. } 9. else 10. { 11. Label1.Text = “No file has been uploaded”; 12. } 13. } 14. }\nThis source code was highlighted with Source Code Highlighter.` Теперь можно запустить сайт, выбрать файл, нажать кнопку отправки и убедиться, что в Label появляется имя загружаемого файла, из чего можно сделать вывод, что файл отправляется на сервер.\nТеперь добавим библиотеки JQuery и JQuery UI, для чего скачаем их с соответствующих сайтов, поместим в каталог проекта и пропишем ссылки на них в секции HEAD нашей страницы. Можно также их не качать, а прописать ссылки на Google вот так:\n\u003clink href=\"~/css/base/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\" /\u003e \u003cscript src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\" type=\"text/javascript\"\u003escript\u003e \u003cscript src=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js\" type=\"text/javascript\"\u003escript\u003e Хотя JQueryUI вам все равно лучше скачать, причем версию для разработчиков, так как там идет базовый набор css. Или можно там же на сайте скачать другую тему или создать свою. Но нам для теста хватит базовой - она, как вы видите, и указана в атрибуте link в коде выше.\nТак jQuery мы подключили, давайте теперь задействуем его для наших ссылок. Пишем на нашей странице в секции head следующий код:\n$(document).ready( function() { $(\"#showLink\").click( ShowDialog ); $(\"#sendLink\").click( submitForm ); } ); var submitForm = function() { var form = window.theForm; if (!form) form = document.forms[0]; if (form) form.submit(); return false; } var ShowDialog = function() { var dlg = $(\"#dialog\"); dlg.dialog( { position: 'center', buttons: { 'Отмена': function() { $(this).dialog('close'); }, 'OK': function() { submitForm(); } }, modal: true, width: 400 } ); dlg.dialog('open'); return false; } Здесь мы вешаем на клик ссылок вызовы функций показа диалога и отправки формы, а также определяем сами функции. Имхо все довольно прозрачно. Теперь попробуйте запустить сайт и отправить файл кнопкой Отправить и ссылкой. Все должно работать как и раньше.\nА теперь попробуйте ткнуть ссылку показа диалога - появится модальный диалог с нашим полем для ввода файла. Выберите файл и нажмите OK. Вот тут и появляется сюрприз - файл не отправляется на сервер!\nПричину я нашел не сразу, хотя оказалась она довольно банальна - оказалось что при создании диалога jQuery выносит div с id=“dialog” и все его содержимое из того места, где div был описан, в конец страницы. Таким образом, получается, что input для загрузки файла находится вне тэга form, и когда мы делаем форме submit, то естественно этот input не участвует в формировании тех параметров, что передаются серверу.\nДля борьбы с этой напастью я первоначально решил внутри div’а для диалога сунуть еще один form, а внутри него уже FileUpload, наивно полагая, что jQuery вынесет и эту форму за пределы первоначальной , а “сабмитить” я уже буду вторую форму. Нет jQuery конечно форму вынес (причем как-то странно, потому что при этом образовалась копия первой формы), но input при этом оказался не внутри этой формы, а после нее. То есть отправка второй формы тоже ничего не давала.\nВ итоге я решил от второй формы отказаться, а просто перед отправкой возвращать input с файлом обратно внутрь первоначальной формы. Для этого код обработки нажатия кнопки OK меняется на такой:\n`1. ‘OK’: function() { 2. var files = $(\"#\u003c%= FileUpload1.ClientID %\u003e\"); 3. if (files \u0026\u0026 files.length \u003e 0) { 4. var form = window.theForm; 5. if (!form) form = document.forms[0]; 6. if (form) { 7. form.appendChild(files[0]); 8. submitForm(); 9. } 10. } 11. dlg.dialog(‘close’); 12. }\nThis source code was highlighted with Source Code Highlighter.` Как можно убедиться, теперь файл на сервер отсылается.\nНастроение: ворочу горы\n","wordCount":"792","inLanguage":"ru","datePublished":"2009-11-15T00:00:00Z","dateModified":"2009-11-15T00:00:00Z","author":{"@type":"Person","name":"alezhu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/jquery-dialog-+-upload-file/"},"publisher":{"@type":"Organization","name":"Блог alezhu","logo":{"@type":"ImageObject","url":"https://alezhu.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://alezhu.github.io/ accesskey=h title="Блог alezhu (Alt + H)">Блог alezhu</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/ title=Программирование><span>Программирование</span></a></li><li><a href=https://alezhu.github.io/hardware/ title=Hardware><span>Hardware</span></a></li><li><a href=https://alezhu.github.io/software/ title=Software><span>Software</span></a></li><li><a href=https://alezhu.github.io/%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/ title=Электроника><span>Электроника</span></a></li><li><a href=https://alezhu.github.io/%D0%B0%D0%B2%D1%82%D0%BE-%D0%BC%D0%BE%D1%82%D0%BE/ title=Авто-мото><span>Авто-мото</span></a></li><li><a href=https://alezhu.github.io/%D0%B6%D0%B8%D0%B7%D0%B0/ title=Жиза><span>Жиза</span></a></li><li><a href=https://alezhu.github.io/archives/ title=Архив><span>Архив</span></a></li><li><a href=https://alezhu.github.io/search/ title="Поиск (Alt + /)" accesskey=/><span>Поиск</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><nav class=breadcrumbs role=navigation aria-label=Breadcrumb><a href=/>Главная</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>
+<a href=/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/>Программирование</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg></nav><h1 class="post-title entry-hint-parent">jQuery Dialog + Upload file</h1><div class=post-meta><span title=2009-11-15T00:00:00+00:00>15 ноября 2009 г.</span>&nbsp;·&nbsp;<span>4 минуты</span>&nbsp;·&nbsp;<span>alezhu</span></div></header><div class="post-content md-content"><h1 id=jquery-dialog--upload-file>jQuery Dialog + Upload file<a hidden class=anchor aria-hidden=true href=#jquery-dialog--upload-file>#</a></h1><p>Столкнулся с занятным глюком. Мне нужно было при клике на ссылку показать модальный диалог с полем для загрузки файла и после нажатия OK отправить это файл на сервер. Дабы не изобретать велосипед, для показа диалога решил воспользоваться <a href=http://jquery.com/>jQuery</a> и соответственно <a href=http://jqueryui.com/demos/dialog/>jQuery UI Dialog</a>. Но все оказалось немного сложнее.</p><p>Но давайте поподробнее с самого начала и с примерами чтобы прочувствовать все самим =). Для серверной части я использую обычный ASP.NET и файл буду грузить обычной синхронной отправкой без всяких там AJAX.</p><p>Итак, создадим в Visual Studio обычный WebSite. На Default.aspx поместим ссылку, Label, FileUpload, кнопку отправки формы и еще одну ссылку. Label нам нужен для вывода имени загруженного файла, первая ссылка - для показа диалога, вторая - для отправки формы через JavaScript (только в качестве примера) и кнопка отправки формы для проверки того, что отправка работает. Причем FileUpload обернем в div с id=&ldquo;dialog&rdquo; - это и будет в дальнейшем содержимое нашего диалога.
+Код страницы будет примерно таким:</p><blockquote><p>`1.<form id=form1 runat=server>2.<div>3. &lt;asp:Label ID=&ldquo;Label1&rdquo; runat=&ldquo;server&rdquo; Text=&ldquo;Select file&rdquo;>&lt;/asp:Label><br>4. For show dialog click <a id=showLink href=http://www.asp.net/>this link.</a>
+5.<div id=dialog>6. &lt;asp:FileUpload ID=&ldquo;FileUpload1&rdquo; runat=&ldquo;server&rdquo; />
+7.</div>8. <input type=submit value=Отправить>
+9. For upload file click <a id=sendLink href=http://www.asp.net/>this link.</a>
+10.</div>11.</form></p><ul><li>This source code was highlighted with Source Code Highlighter.`</li></ul></blockquote><p>Далее в методе Page_Load пишем такой код:</p><blockquote><p>`1. protected void Page_Load(object sender, EventArgs e)
+2. {
+3. if (IsPostBack)
+4. {
+5. if (this.FileUpload1.HasFile)
+6. {
+7. Label1.Text = string.Format(&ldquo;You files name is {0}.&rdquo;, FileUpload1.FileName);
+8. }
+9. else
+10. {
+11. Label1.Text = &ldquo;No file has been uploaded&rdquo;;
+12. }
+13. }
+14. }</p><ul><li>This source code was highlighted with Source Code Highlighter.`</li></ul></blockquote><p>Теперь можно запустить сайт, выбрать файл, нажать кнопку отправки и убедиться, что в Label появляется имя загружаемого файла, из чего можно сделать вывод, что файл отправляется на сервер.</p><p>Теперь добавим библиотеки JQuery и JQuery UI, для чего скачаем их с соответствующих сайтов, поместим в каталог проекта и пропишем ссылки на них в секции HEAD нашей страницы. Можно также их не качать, а прописать ссылки на Google вот так:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>link</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;~/css/base/jquery-ui.css&#34;</span> <span style=color:#a6e22e>rel</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;stylesheet&#34;</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text/css&#34;</span> /&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>src</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js&#34;</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text/javascript&#34;</span>&gt;&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>src</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js&#34;</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text/javascript&#34;</span>&gt;&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div><p>Хотя JQueryUI вам все равно лучше скачать, причем версию для разработчиков, так как там идет базовый набор css. Или можно там же на сайте скачать другую тему или создать свою. Но нам для теста хватит базовой - она, как вы видите, и указана в атрибуте link в коде выше.</p><p>Так jQuery мы подключили, давайте теперь задействуем его для наших ссылок. Пишем на нашей странице в секции head следующий код:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>$</span>(document).<span style=color:#a6e22e>ready</span>(
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>function</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>$</span>(<span style=color:#e6db74>&#34;#showLink&#34;</span>).<span style=color:#a6e22e>click</span>(
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>ShowDialog</span>
+</span></span><span style=display:flex><span>    );
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>$</span>(<span style=color:#e6db74>&#34;#sendLink&#34;</span>).<span style=color:#a6e22e>click</span>(
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>submitForm</span>
+</span></span><span style=display:flex><span>    );
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>submitForm</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>function</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>form</span> <span style=color:#f92672>=</span> window.<span style=color:#a6e22e>theForm</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span><span style=color:#a6e22e>form</span>) <span style=color:#a6e22e>form</span> <span style=color:#f92672>=</span> document.<span style=color:#a6e22e>forms</span>[<span style=color:#ae81ff>0</span>];
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>form</span>) <span style=color:#a6e22e>form</span>.<span style=color:#a6e22e>submit</span>();
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>ShowDialog</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>function</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>dlg</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>$</span>(<span style=color:#e6db74>&#34;#dialog&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>dlg</span>.<span style=color:#a6e22e>dialog</span>(
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>position</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;center&#39;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>buttons</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;Отмена&#39;</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>function</span>() {
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>$</span>(<span style=color:#66d9ef>this</span>).<span style=color:#a6e22e>dialog</span>(<span style=color:#e6db74>&#39;close&#39;</span>);
+</span></span><span style=display:flex><span>        },
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;OK&#39;</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>function</span>() {
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>submitForm</span>();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>      },
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>modal</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>width</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>400</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  );
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>dlg</span>.<span style=color:#a6e22e>dialog</span>(<span style=color:#e6db74>&#39;open&#39;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Здесь мы вешаем на клик ссылок вызовы функций показа диалога и отправки формы, а также определяем сами функции. Имхо все довольно прозрачно. Теперь попробуйте запустить сайт и отправить файл кнопкой Отправить и ссылкой. Все должно работать как и раньше.</p><p>А теперь попробуйте ткнуть ссылку показа диалога - появится модальный диалог с нашим полем для ввода файла. Выберите файл и нажмите OK. Вот тут и появляется сюрприз - файл не отправляется на сервер!</p><p>Причину я нашел не сразу, хотя оказалась она довольно банальна - оказалось что при создании диалога jQuery выносит div с id=&ldquo;dialog&rdquo; и все его содержимое из того места, где div был описан, в конец страницы. Таким образом, получается, что input для загрузки файла находится вне тэга form, и когда мы делаем форме submit, то естественно этот input не участвует в формировании тех параметров, что передаются серверу.</p><p>Для борьбы с этой напастью я первоначально решил внутри div&rsquo;а для диалога сунуть еще один form, а внутри него уже FileUpload, наивно полагая, что jQuery вынесет и эту форму за пределы первоначальной , а &ldquo;сабмитить&rdquo; я уже буду вторую форму. Нет jQuery конечно форму вынес (причем как-то странно, потому что при этом образовалась копия первой формы), но input при этом оказался не внутри этой формы, а после нее. То есть отправка второй формы тоже ничего не давала.</p><p>В итоге я решил от второй формы отказаться, а просто перед отправкой возвращать input с файлом обратно внутрь первоначальной формы. Для этого код обработки нажатия кнопки OK меняется на такой:</p><blockquote><p>`1. &lsquo;OK&rsquo;: function() {
+2. var files = $("#&lt;%= FileUpload1.ClientID %>");
+3. if (files && files.length > 0) {
+4. var form = window.theForm;
+5. if (!form) form = document.forms[0];
+6. if (form) {
+7. form.appendChild(files[0]);
+8. submitForm();
+9. }
+10. }
+11. dlg.dialog(&lsquo;close&rsquo;);
+12. }</p><ul><li>This source code was highlighted with Source Code Highlighter.`</li></ul></blockquote><p>Как можно убедиться, теперь файл на сервер отсылается.</p><p><em>Настроение:</em> ворочу горы</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://alezhu.github.io/tags/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82/>Программист</a></li><li><a href=https://alezhu.github.io/tags/jquery/>Jquery</a></li><li><a href=https://alezhu.github.io/tags/.net/>.Net</a></li><li><a href=https://alezhu.github.io/tags/asp.net/>Asp.net</a></li></ul><nav class=paginav><a class=prev href=https://alezhu.github.io/software/visual-studio-2010-rc-%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%BD%D0%B0-%D0%B2%D1%81%D0%B5%D0%BC/><span class=title>« Предыдущая</span>
+<span>Visual Studio 2010 RC доступна всем</span>
+</a><a class=next href=https://alezhu.github.io/software/%D0%B7%D0%B0%D1%80%D0%B5%D0%BB%D0%B8%D0%B7%D0%B8%D0%BB%D0%BE-total-commander-7/><span class=title>Следующая »</span>
+<span>Зарелизило Total Commander 7.5</span></a></nav></footer><div class=comments-section style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)"><h3 style=margin-bottom:1.5rem>Комментарии</h3><div class=giscus></div><script src=https://giscus.app/client.js data-repo=alezhu/alezhu.github.io data-repo-id=R_kgDOVufVnQ data-category=General data-category-id=DIC_kwDOVufVnc4DLIqK data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=ru crossorigin=anonymous async>
+  </script></div></article></main><footer class=footer><span>&copy; 2026 <a href=https://alezhu.github.io/>Блог alezhu</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        
+        let menuScrollTimeout;
+        menu.addEventListener("scroll", function () {
+            clearTimeout(menuScrollTimeout);
+            menuScrollTimeout = setTimeout(function () {
+                localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+            }, 150);
+        }, { passive: true });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            const target = document.querySelector(`[id='${decodeURIComponent(id)}']`);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                target.scrollIntoView();
+            }
+            
+            
+            if (target.tabIndex < 0 && !target.hasAttribute("tabindex")) {
+                target.setAttribute("tabindex", "-1");
+            }
+            target.focus({ preventScroll: true });
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script><script>
+    var toplink = document.getElementById("top-link");
+    var scrollTicking = false;
+    
+    window.addEventListener("scroll", function () {
+        if (scrollTicking) {
+            return;
+        }
+        scrollTicking = true;
+        requestAnimationFrame(function () {
+            const scrollThreshold = window.innerHeight;
+            const shown = document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold;
+            toplink.classList.toggle("hidden", !shown);
+            scrollTicking = false;
+        });
+    }, { passive: true });
+
+</script><script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script><script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script></body></html>

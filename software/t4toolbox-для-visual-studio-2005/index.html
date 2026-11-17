@@ -1,0 +1,155 @@
+<!doctype html><html lang=ru dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>T4Toolbox для Visual Studio 2005 | Блог alezhu</title><meta name=keywords content><meta name=description content="T4Toolbox для Visual Studio 2005
+Доработал T4Toolbox, чтобы он мог работать в Visual Studio 2005 – ссылка на скачивание (download link).
+Для тех, кто не в курсе – есть такая штука Text Template Transformation Toolkit (T4), которая позволяет генерировать классы.
+Вернее даже не только классы, а все что угодно на основе какого либо шаблона. За подробностями можете сходить в интернеты, например,  сюда, сюда и там уже найдете другие ссылки.
+И есть такие динозавры как я, которые, не смотря на выход VS2010, вынуждены до сих пор работать с 2005 версией студии. По умолчанию T4 в поставку 2005ой студии кажется не входит, но входит в пакеты DSL Tools, Guidance Automation Toolkit и возможно в Visual Studio 2005 SDK . В общем не помню откуда он у меня, но откуда то из вышеперечисленного."><meta name=author content="alezhu"><link rel=canonical href=https://alezhu.github.io/software/t4toolbox-%D0%B4%D0%BB%D1%8F-visual-studio-2005/><link crossorigin=anonymous href=/assets/css/stylesheet.6adf4b2198dfa3949d553a40860b68823301741cec8b65d1bf35224736ecdd52.css integrity="sha256-at9LIZjfo5SdVTpAhgtogjMBdBzsi2XRvzUiRzbs3VI=" rel="preload stylesheet" as=style><link rel=icon href=https://alezhu.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://alezhu.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://alezhu.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://alezhu.github.io/apple-touch-icon.png><link rel=mask-icon href=https://alezhu.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=ru href=https://alezhu.github.io/software/t4toolbox-%D0%B4%D0%BB%D1%8F-visual-studio-2005/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://alezhu.github.io/software/t4toolbox-%D0%B4%D0%BB%D1%8F-visual-studio-2005/"><meta property="og:site_name" content="Блог alezhu"><meta property="og:title" content="T4Toolbox для Visual Studio 2005"><meta property="og:description" content="T4Toolbox для Visual Studio 2005 Доработал T4Toolbox, чтобы он мог работать в Visual Studio 2005 – ссылка на скачивание (download link).
+Для тех, кто не в курсе – есть такая штука Text Template Transformation Toolkit (T4), которая позволяет генерировать классы.
+Вернее даже не только классы, а все что угодно на основе какого либо шаблона. За подробностями можете сходить в интернеты, например, сюда, сюда и там уже найдете другие ссылки.
+И есть такие динозавры как я, которые, не смотря на выход VS2010, вынуждены до сих пор работать с 2005 версией студии. По умолчанию T4 в поставку 2005ой студии кажется не входит, но входит в пакеты DSL Tools, Guidance Automation Toolkit и возможно в Visual Studio 2005 SDK . В общем не помню откуда он у меня, но откуда то из вышеперечисленного."><meta property="og:locale" content="ru"><meta property="og:type" content="article"><meta property="article:section" content="software"><meta property="article:published_time" content="2010-07-17T00:00:00+00:00"><meta property="article:modified_time" content="2010-07-17T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="T4Toolbox для Visual Studio 2005"><meta name=twitter:description content="T4Toolbox для Visual Studio 2005 Доработал T4Toolbox, чтобы он мог работать в Visual Studio 2005 – ссылка на скачивание (download link).
+Для тех, кто не в курсе – есть такая штука Text Template Transformation Toolkit (T4), которая позволяет генерировать классы.
+Вернее даже не только классы, а все что угодно на основе какого либо шаблона. За подробностями можете сходить в интернеты, например, сюда, сюда и там уже найдете другие ссылки.
+И есть такие динозавры как я, которые, не смотря на выход VS2010, вынуждены до сих пор работать с 2005 версией студии. По умолчанию T4 в поставку 2005ой студии кажется не входит, но входит в пакеты DSL Tools, Guidance Automation Toolkit и возможно в Visual Studio 2005 SDK . В общем не помню откуда он у меня, но откуда то из вышеперечисленного."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Software","item":"https://alezhu.github.io/software/"},{"@type":"ListItem","position":2,"name":"","item":"https://alezhu.github.io/software/t4toolbox-%D0%B4%D0%BB%D1%8F-visual-studio-2005/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"T4Toolbox для Visual Studio 2005","name":"T4Toolbox для Visual Studio 2005","description":"T4Toolbox для Visual Studio 2005 Доработал T4Toolbox, чтобы он мог работать в Visual Studio 2005 – ссылка на скачивание (download link).\nДля тех, кто не в курсе – есть такая штука Text Template Transformation Toolkit (T4), которая позволяет генерировать классы.\nВернее даже не только классы, а все что угодно на основе какого либо шаблона. За подробностями можете сходить в интернеты, например, сюда, сюда и там уже найдете другие ссылки.\nИ есть такие динозавры как я, которые, не смотря на выход VS2010, вынуждены до сих пор работать с 2005 версией студии. По умолчанию T4 в поставку 2005ой студии кажется не входит, но входит в пакеты DSL Tools, Guidance Automation Toolkit и возможно в Visual Studio 2005 SDK . В общем не помню откуда он у меня, но откуда то из вышеперечисленного.\n","keywords":[],"articleBody":"T4Toolbox для Visual Studio 2005 Доработал T4Toolbox, чтобы он мог работать в Visual Studio 2005 – ссылка на скачивание (download link).\nДля тех, кто не в курсе – есть такая штука Text Template Transformation Toolkit (T4), которая позволяет генерировать классы.\nВернее даже не только классы, а все что угодно на основе какого либо шаблона. За подробностями можете сходить в интернеты, например, сюда, сюда и там уже найдете другие ссылки.\nИ есть такие динозавры как я, которые, не смотря на выход VS2010, вынуждены до сих пор работать с 2005 версией студии. По умолчанию T4 в поставку 2005ой студии кажется не входит, но входит в пакеты DSL Tools, Guidance Automation Toolkit и возможно в Visual Studio 2005 SDK . В общем не помню откуда он у меня, но откуда то из вышеперечисленного.\nКроме того, существует такая штука как T4Toolbox (фактически T5 ;-) ), которая расширяет возможности T4 и добавляет несколько вкусных плюшек. Но беда в том, что T4Toolbox поддерживает студию только с 2008 версии (координатор проекта , Oleg Sych, говорит, что ресурсов на поддержку 2005 студии у них нет). И, конечно, владельцы Express версий могут также забыть об этом компоненте – но это уже претензии к MCSF. Так вот, в принципе, T4Toolbox мне был без надобности, но тут пришлось столкнуться с одной хитрой проблемкой. Какая проблемка я напишу еще как-нибудь, а пока важно, что для ее решения мне понадобился T4Toolbox, работающий в VS2005. Хотя потом выяснилось, что можно было бы обойтись и без него, но это было потом и с ним все равно удобнее =).\nИтак, я поставил T4Toolbox. Поскольку у меня были когда то Express версии 2008 студии, он установился. Но в 2005ой естественно не работал. Тогда я взял относящиеся к T4Toolbox записи в реестре из ветки “HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio*9.0*\\TextTemplating\" и перенес в ветку “HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio*8.0*\\TextTemplating”. Теперь при ссылке в шаблоне на T4Toolbox.tt студия выдавала ошибку, что T4Toolbox.dll ссылается на другие версии сборок Microsoft.VisualStudio.TextTemplating.dll и Microsoft.VisualStudio.TextTemplating.VSHost.dll и использовать его не получится. Иными словами T4Toolbox.dll имеет ссылки на версии 9.0 указанных сборок, а в 2005 студии используются сборки 8.2 (9.0 – это сборки от 2008 студии).\n“Ха-ха!” – подумал я и прописал в файл c:\\Program Files\\T4 Toolbox\\Bin\\T4Toolbox.dll.config директивы, заставляющие принудительно грузить версии 8.2, если запрошена версии 9.0. “Ну-ну!” – подумали в Microsoft… Ничего не изменилось… В итоге после нескольких экспериментов с созданным тестовым проектом выяснилось, что .NET “кладет” на config-файлы для dll. И править нужно в config-файле для exe. Но я пока сделал грубее и внес изменения в сам machine.config.\nСообщения об ошибке изменились. Стало понятно, что теперь T4Toolbox грузится в VS2005 и пытается работать. Но это у него не получается. Дело оказалось в том, что в процессе генерации нового файла по шаблону T4 создает временный класс и пытается скомпилировать временную сборку. При этом компилятору передается список References, в которые в частности входят сборки Microsoft.VisualStudio.TextTemplating.dll и T4Toolbox.dll. Как вы помните, первая у нас версии 8.2, а вторая ссылается на первую, но версии 9.0. При этом компилятор “кладет” на то, что у вас прописано в machine.config, а просто смотрит, что у вас версии не совпадают и выдает ошибку.\nМожно бы было заморочиться еще дальше – скачать dllки от 2008 студии, написать обертку вокруг csc.exe, которая подменяла бы ссылки на references с 8.2 на 9.0, и вызывала бы сам csc.exe. Но я решил все таки пойти правильным путем – скачал исходники T4Toolbox и начал их адаптировать для 2005 студии. Причем вначале я было решил сделать так, чтобы T4Toolbox и собирался в 2005 студии (сейчас для сборки T4Toolbox используется VS2010). Начал адаптировать код под .NET 2.0, переписывать лябды на делегаты, вызывать Extension методы по старому синтаксису, создавать явные поля для, свойств с неявными get и set (кстати, пытаясь сделать последнее, нашел интересный глюк в студии – тоже напишу потом как-нибудь). Но не суть, в итоге я подумал – да нафиг – лучше я все сделаю на той же VS2010, с прицелом на .NET 3.5 .\nВ общем был не сложно – создал новую конфигурацию, которая использует 8.2 версии сборок, повозился с инсталлятором. Результат работы – ссылка вначале статьи. Инсталлятор содержит все версии и для 2005, и для 2008, и для 2010 студии. Сами исходники не изменялись. Сборка основана на версии 10.7.2.1\nТестировать особо времени не было. Для моих целей все заработало. Поэтому если у вас будут какие то проблемы – пишите будем думать, но как обычно в таких случаях - никто ничего не обещает наверняка =).\n","wordCount":"718","inLanguage":"ru","datePublished":"2010-07-17T00:00:00Z","dateModified":"2010-07-17T00:00:00Z","author":{"@type":"Person","name":"alezhu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://alezhu.github.io/software/t4toolbox-%D0%B4%D0%BB%D1%8F-visual-studio-2005/"},"publisher":{"@type":"Organization","name":"Блог alezhu","logo":{"@type":"ImageObject","url":"https://alezhu.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://alezhu.github.io/ accesskey=h title="Блог alezhu (Alt + H)">Блог alezhu</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/ title=Программирование><span>Программирование</span></a></li><li><a href=https://alezhu.github.io/hardware/ title=Hardware><span>Hardware</span></a></li><li><a href=https://alezhu.github.io/software/ title=Software><span>Software</span></a></li><li><a href=https://alezhu.github.io/%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/ title=Электроника><span>Электроника</span></a></li><li><a href=https://alezhu.github.io/%D0%B0%D0%B2%D1%82%D0%BE-%D0%BC%D0%BE%D1%82%D0%BE/ title=Авто-мото><span>Авто-мото</span></a></li><li><a href=https://alezhu.github.io/%D0%B6%D0%B8%D0%B7%D0%B0/ title=Жиза><span>Жиза</span></a></li><li><a href=https://alezhu.github.io/archives/ title=Архив><span>Архив</span></a></li><li><a href=https://alezhu.github.io/search/ title="Поиск (Alt + /)" accesskey=/><span>Поиск</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><nav class=breadcrumbs role=navigation aria-label=Breadcrumb><a href=/>Главная</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>
+<a href=/software/>Software</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg></nav><h1 class="post-title entry-hint-parent">T4Toolbox для Visual Studio 2005</h1><div class=post-meta><span title=2010-07-17T00:00:00+00:00>17 июля 2010 г.</span>&nbsp;·&nbsp;<span>4 минуты</span>&nbsp;·&nbsp;<span>alezhu</span></div></header><div class="post-content md-content"><h1 id=t4toolbox-для-visual-studio-2005>T4Toolbox для Visual Studio 2005<a hidden class=anchor aria-hidden=true href=#t4toolbox-для-visual-studio-2005>#</a></h1><p>Доработал <a href=http://t4toolbox.codeplex.com>T4Toolbox</a>, чтобы он мог работать в Visual Studio 2005 – <a href=http://www.box.net/shared/7yge1l99gi>ссылка на скачивание</a> (<a href=http://www.box.net/shared/7yge1l99gi>download link</a>).</p><p>Для тех, кто не в курсе – есть такая штука Text Template Transformation Toolkit (T4), которая позволяет генерировать классы.<br>Вернее даже не только классы, а все что угодно на основе какого либо шаблона. За подробностями можете сходить в интернеты, например,  <a href=http://habrahabr.ru/blogs/net/64895/>сюда</a>, <a href=http://habrahabr.ru/blogs/net/65716/>сюда</a> и там уже найдете другие ссылки.</p><p>И есть такие динозавры как я, которые, не смотря на выход VS2010, вынуждены до сих пор работать с 2005 версией студии. По умолчанию T4 в поставку 2005ой студии кажется не входит, но входит в пакеты <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=57a14cc6-c084-48dd-b401-1845013bf834&amp;displaylang=en">DSL Tools</a>, <a href="http://www.microsoft.com/downloads/details.aspx?familyid=E3D101DB-6EE1-4EC5-884E-97B27E49EAAE&amp;displaylang=en">Guidance Automation Toolkit</a> и возможно в <a href="http://www.microsoft.com/downloads/details.aspx?familyid=51A5C65B-C020-4E08-8AC0-3EB9C06996F4&amp;displaylang=en">Visual Studio 2005 SDK</a> . В общем не помню откуда он у меня, но откуда то из вышеперечисленного.</p><p>Кроме того, существует такая штука как <a href=http://t4toolbox.codeplex.com>T4Toolbox</a> (фактически T5 ;-) ), которая расширяет возможности T4 и добавляет несколько вкусных плюшек. Но беда в том, что T4Toolbox поддерживает студию только с 2008 версии (координатор проекта , <a href=http://www.olegsych.com/>Oleg Sych</a>, говорит, что ресурсов на поддержку 2005 студии у них нет). И, конечно, владельцы Express версий могут также забыть об этом компоненте – но это уже претензии к MCSF. Так вот, в принципе, T4Toolbox мне был без надобности, но тут пришлось столкнуться с одной хитрой проблемкой. Какая проблемка я напишу еще как-нибудь, а пока важно, что для ее решения мне понадобился T4Toolbox, работающий в VS2005. Хотя потом выяснилось, что можно было бы обойтись и без него, но это было потом и с ним все равно удобнее =).</p><p>Итак, я поставил T4Toolbox. Поскольку у меня были когда то Express версии 2008 студии, он установился. Но в 2005ой естественно не работал. Тогда я взял относящиеся к T4Toolbox записи в реестре из ветки “HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio*<em>9.0</em>*\TextTemplating" и перенес в ветку “HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio*<em>8.0</em>*\TextTemplating”. Теперь  при ссылке в шаблоне на T4Toolbox.tt студия выдавала ошибку, что T4Toolbox.dll ссылается на другие версии сборок Microsoft.VisualStudio.TextTemplating.dll и Microsoft.VisualStudio.TextTemplating.VSHost.dll и использовать его не получится. Иными словами T4Toolbox.dll имеет ссылки на версии 9.0 указанных сборок, а в 2005 студии используются сборки 8.2 (9.0 – это сборки от 2008 студии).</p><p>“Ха-ха!” – подумал я и прописал в файл c:\Program Files\T4 Toolbox\Bin\T4Toolbox.dll.config директивы, заставляющие принудительно грузить версии 8.2, если запрошена версии 9.0. “Ну-ну!” – подумали в Microsoft… Ничего не изменилось… В итоге после нескольких экспериментов с созданным тестовым проектом выяснилось, что  .NET “кладет” на config-файлы для dll. И править нужно в config-файле для exe. Но я пока сделал грубее и внес изменения в сам machine.config.</p><p>Сообщения об ошибке изменились. Стало понятно, что теперь T4Toolbox грузится в VS2005 и пытается работать. Но это у него не получается. Дело оказалось в том, что в процессе генерации нового файла по шаблону T4 создает временный класс и пытается скомпилировать временную сборку. При этом компилятору передается список References, в которые в частности входят сборки  Microsoft.VisualStudio.TextTemplating.dll и T4Toolbox.dll. Как вы помните, первая у нас версии 8.2, а вторая ссылается на первую, но версии 9.0. При этом компилятор “кладет” на то, что у вас прописано в machine.config, а просто смотрит, что у вас версии не совпадают и выдает ошибку.</p><p>Можно бы было заморочиться еще дальше – скачать dllки от 2008 студии, написать обертку вокруг csc.exe, которая подменяла бы ссылки на references с 8.2 на 9.0, и вызывала бы сам csc.exe. Но я решил все таки пойти правильным путем – скачал исходники T4Toolbox и начал их адаптировать для 2005 студии. Причем вначале я было решил сделать так, чтобы T4Toolbox и собирался в 2005 студии (сейчас для сборки T4Toolbox используется VS2010). Начал адаптировать код под .NET 2.0, переписывать лябды на делегаты, вызывать Extension методы по старому синтаксису, создавать явные поля для, свойств с неявными get и set (кстати, пытаясь сделать последнее, нашел интересный глюк в студии – тоже напишу потом как-нибудь). Но не суть, в итоге я подумал – да нафиг – лучше я все сделаю на той же VS2010, с прицелом на .NET 3.5 .</p><p>В общем был не сложно – создал новую конфигурацию, которая использует 8.2 версии сборок, повозился с инсталлятором. Результат работы – ссылка вначале статьи. Инсталлятор содержит все версии и для 2005, и для 2008, и для 2010 студии. Сами исходники не изменялись. Сборка основана на версии 10.7.2.1</p><p>Тестировать особо времени не было. Для моих целей все заработало. Поэтому если у вас будут какие то проблемы – пишите будем думать, но как обычно в таких случаях - никто ничего не обещает наверняка =).</p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/%D1%86%D0%B8%D1%82%D0%B0%D1%82%D0%B0-%2313235/><span class=title>« Предыдущая</span>
+<span>Цитата #13235</span>
+</a><a class=next href=https://alezhu.github.io/%D0%B6%D0%B8%D0%B7%D0%B0/%D1%82%D1%83%D1%80%D0%B8%D1%81%D1%82%D1%8B/><span class=title>Следующая »</span>
+<span>Туристы</span></a></nav></footer><div class=comments-section style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)"><h3 style=margin-bottom:1.5rem>Комментарии</h3><div class=giscus></div><script src=https://giscus.app/client.js data-repo=alezhu/alezhu.github.io data-repo-id=R_kgDOVufVnQ data-category=General data-category-id=DIC_kwDOVufVnc4DLIqK data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=ru crossorigin=anonymous async>
+  </script></div></article></main><footer class=footer><span>&copy; 2026 <a href=https://alezhu.github.io/>Блог alezhu</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        
+        let menuScrollTimeout;
+        menu.addEventListener("scroll", function () {
+            clearTimeout(menuScrollTimeout);
+            menuScrollTimeout = setTimeout(function () {
+                localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+            }, 150);
+        }, { passive: true });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            const target = document.querySelector(`[id='${decodeURIComponent(id)}']`);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                target.scrollIntoView();
+            }
+            
+            
+            if (target.tabIndex < 0 && !target.hasAttribute("tabindex")) {
+                target.setAttribute("tabindex", "-1");
+            }
+            target.focus({ preventScroll: true });
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script><script>
+    var toplink = document.getElementById("top-link");
+    var scrollTicking = false;
+    
+    window.addEventListener("scroll", function () {
+        if (scrollTicking) {
+            return;
+        }
+        scrollTicking = true;
+        requestAnimationFrame(function () {
+            const scrollThreshold = window.innerHeight;
+            const shown = document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold;
+            toplink.classList.toggle("hidden", !shown);
+            scrollTicking = false;
+        });
+    }, { passive: true });
+
+</script><script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script><script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script></body></html>
