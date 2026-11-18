@@ -1,0 +1,151 @@
+<!doctype html><html lang=ru dir=auto data-theme=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service | Блог alezhu</title><meta name=keywords content="windows,teso,sysinternals,procexp,c++,winapi,games,utils,опыт"><meta name=description content="Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service
+Если вы играете в The Elder Scrolls Online (TESO) и при этом держите на компьютере популярнейшую системную утилиту Process Explorer от Марка Руссиновича (Sysinternals), то с весны 2024 года вы наверняка познакомились с одним из самых раздражающих багов игры.
+Сценарий до боли знаком: запускаем TESO, ждём загрузку заставки, вводим пароль (или логинимся через Steam), попадаем в лобби выбора персонажа, нажимаем «Играть», почти загружаемся в локацию (или даже загружаемся на минуту другую)&mldr; и тут бабах! Всплывает окно с крашем, игра схлопывается, и всё приходится начинать сначала."><meta name=author content="alezhu"><link rel=canonical href=https://alezhu.github.io/software/windows/%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83-teso-%D0%B2%D1%8B%D0%BB%D0%B5%D1%82%D0%B0%D0%B5%D1%82-%D0%B8%D0%B7-%D0%B7%D0%B0-process-explorer-%D0%B8-%D0%BA%D0%B0%D0%BA-%D1%8D%D1%82%D0%BE-%D1%80%D0%B5%D1%88%D0%B0%D0%B5%D1%82-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-teso-wait-service/><link crossorigin=anonymous href=/assets/css/stylesheet.6adf4b2198dfa3949d553a40860b68823301741cec8b65d1bf35224736ecdd52.css integrity="sha256-at9LIZjfo5SdVTpAhgtogjMBdBzsi2XRvzUiRzbs3VI=" rel="preload stylesheet" as=style><link rel=icon href=https://alezhu.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://alezhu.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://alezhu.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://alezhu.github.io/apple-touch-icon.png><link rel=mask-icon href=https://alezhu.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=ru href=https://alezhu.github.io/software/windows/%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83-teso-%D0%B2%D1%8B%D0%BB%D0%B5%D1%82%D0%B0%D0%B5%D1%82-%D0%B8%D0%B7-%D0%B7%D0%B0-process-explorer-%D0%B8-%D0%BA%D0%B0%D0%BA-%D1%8D%D1%82%D0%BE-%D1%80%D0%B5%D1%88%D0%B0%D0%B5%D1%82-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-teso-wait-service/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51);color-scheme:dark}.list{background:var(--theme)}.toc{background:var(--entry)}}</style></noscript><script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://alezhu.github.io/software/windows/%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83-teso-%D0%B2%D1%8B%D0%BB%D0%B5%D1%82%D0%B0%D0%B5%D1%82-%D0%B8%D0%B7-%D0%B7%D0%B0-process-explorer-%D0%B8-%D0%BA%D0%B0%D0%BA-%D1%8D%D1%82%D0%BE-%D1%80%D0%B5%D1%88%D0%B0%D0%B5%D1%82-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-teso-wait-service/"><meta property="og:site_name" content="Блог alezhu"><meta property="og:title" content="Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service"><meta property="og:description" content="Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service Если вы играете в The Elder Scrolls Online (TESO) и при этом держите на компьютере популярнейшую системную утилиту Process Explorer от Марка Руссиновича (Sysinternals), то с весны 2024 года вы наверняка познакомились с одним из самых раздражающих багов игры.
+Сценарий до боли знаком: запускаем TESO, ждём загрузку заставки, вводим пароль (или логинимся через Steam), попадаем в лобби выбора персонажа, нажимаем «Играть», почти загружаемся в локацию (или даже загружаемся на минуту другую)… и тут бабах! Всплывает окно с крашем, игра схлопывается, и всё приходится начинать сначала."><meta property="og:locale" content="ru"><meta property="og:type" content="article"><meta property="article:section" content="software"><meta property="article:published_time" content="2024-11-05T00:00:00+00:00"><meta property="article:modified_time" content="2024-11-05T00:00:00+00:00"><meta property="article:tag" content="Windows"><meta property="article:tag" content="Teso"><meta property="article:tag" content="Sysinternals"><meta property="article:tag" content="Procexp"><meta property="article:tag" content="C++"><meta property="article:tag" content="Winapi"><meta name=twitter:card content="summary"><meta name=twitter:title content="Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service"><meta name=twitter:description content="Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service Если вы играете в The Elder Scrolls Online (TESO) и при этом держите на компьютере популярнейшую системную утилиту Process Explorer от Марка Руссиновича (Sysinternals), то с весны 2024 года вы наверняка познакомились с одним из самых раздражающих багов игры.
+Сценарий до боли знаком: запускаем TESO, ждём загрузку заставки, вводим пароль (или логинимся через Steam), попадаем в лобби выбора персонажа, нажимаем «Играть», почти загружаемся в локацию (или даже загружаемся на минуту другую)… и тут бабах! Всплывает окно с крашем, игра схлопывается, и всё приходится начинать сначала."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Software","item":"https://alezhu.github.io/software/"},{"@type":"ListItem","position":2,"name":"Windows","item":"https://alezhu.github.io/software/windows/"},{"@type":"ListItem","position":3,"name":"","item":"https://alezhu.github.io/software/windows/%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83-teso-%D0%B2%D1%8B%D0%BB%D0%B5%D1%82%D0%B0%D0%B5%D1%82-%D0%B8%D0%B7-%D0%B7%D0%B0-process-explorer-%D0%B8-%D0%BA%D0%B0%D0%BA-%D1%8D%D1%82%D0%BE-%D1%80%D0%B5%D1%88%D0%B0%D0%B5%D1%82-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-teso-wait-service/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service","name":"Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service","description":"Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service Если вы играете в The Elder Scrolls Online (TESO) и при этом держите на компьютере популярнейшую системную утилиту Process Explorer от Марка Руссиновича (Sysinternals), то с весны 2024 года вы наверняка познакомились с одним из самых раздражающих багов игры.\nСценарий до боли знаком: запускаем TESO, ждём загрузку заставки, вводим пароль (или логинимся через Steam), попадаем в лобби выбора персонажа, нажимаем «Играть», почти загружаемся в локацию (или даже загружаемся на минуту другую)\u0026hellip; и тут бабах! Всплывает окно с крашем, игра схлопывается, и всё приходится начинать сначала.\n","keywords":["windows","teso","sysinternals","procexp","c++","winapi","games","utils","опыт"],"articleBody":"Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service Если вы играете в The Elder Scrolls Online (TESO) и при этом держите на компьютере популярнейшую системную утилиту Process Explorer от Марка Руссиновича (Sysinternals), то с весны 2024 года вы наверняка познакомились с одним из самых раздражающих багов игры.\nСценарий до боли знаком: запускаем TESO, ждём загрузку заставки, вводим пароль (или логинимся через Steam), попадаем в лобби выбора персонажа, нажимаем «Играть», почти загружаемся в локацию (или даже загружаемся на минуту другую)… и тут бабах! Всплывает окно с крашем, игра схлопывается, и всё приходится начинать сначала.\nВиновник? Банально открытый в фоне Process Explorer. Разработчики игры сломали совместимость с ним ещё в марте, а чинить, похоже, даже не планируют.\nРассказываю, в чём суть проблемы, почему меня это достало и как я решил вопрос с помощью собственной фоновой службы TESO Wait Service.\nПредыстория: Update 41 и античит ZOS В марте 2024 года студия ZeniMax Online Studios (ZOS) выкатила для TESO масштабный Update 41. Помимо игрового контента, в обновление зашили очередную итерацию внутренней античитерской защиты (или подкрутили гайки существующей).\nСразу после релиза игра начала намертво крашиться при запуске, если в операционной системе запущен Process Explorer.\nСамое издевательское в этой ситуации — тайминг вылета. Игра не предупреждает вас на старте: «Эй, у тебя открыт Process Explorer, закрой его». Нет! Она даёт вам полностью пройти авторизацию, зайти на экран выбора героев, инициировать загрузку зоны — и только в финале загрузки отваливается с ошибкой.\nИгроки тут же создали ветку на официальном форуме ZOS и засыпали техподдержку тикетами. Разработчики дежурно отписались, что «проблема исследуется».\nИ вот на дворе ноябрь 2024 года. Уже вышел Update 44. А воз (он же ZOS 😉) и ныне там: баг не исправлен, а сами разработчики, кажется, благополучно о нём забыли.\nВ чём боль: двойной запуск каждый вечер Казалось бы: ну закрой Process Explorer перед игрой, делов-то?\nНо Process Explorer — это не та утилита, которую открываешь раз в месяц. У большинства системных администраторов, разработчиков и просто продвинутых пользователей Windows он либо висит в автозагрузке со старта системы, либо сворачивается в трей и живёт там неделями вместо стандартного Диспетчера задач.\nВ итоге ежедневный запуск игры превращается в день сурка:\nЗапустил TESO. Подождал загрузку, ввёл пароль. Дождался лобби, выбрал персонажа. Посмотрел на загрузочный экран… бац — вылет! Вспомнил «добрым» словом ZOS. Вспомнил про трей, закрыл Process Explorer. Снова запустил TESO, снова пароль, снова выбор перса, снова загрузка. Ура, наконец-то можно поиграть (потеряв минут пять времени на ровном месте). Забыть закрыть Process Explorer перед запуском игры — классика жанра: умеем, практикуем регулярно. Когда эта рутина повторилась в сотый раз, терпение лопнуло.\nРешение Поскольку надежды на ZOS не осталось, нужно автоматизировать процесс: пусть компьютер сам следит за запуском TESO и молча прибивает Process Explorer в ту же секунду.\nСделать простенький скрипт на PowerShell или bat-файл? Неудобно:\nСкрипт нужно запускать вручную перед игрой (а мы и так забываем!). Если держать скрипт в вечном цикле с опросом процессов, он будет впустую молотить процессор (while ($true) { ... Start-Sleep }). Process Explorer часто запускается с повышенными правами администратора. Чтобы закрыть такой процесс из обычного пользовательского скрипта, придётся каждый раз ловить окно UAC. Поэтому я написал полноценную системную службу Windows — TESO Wait Service.\nКак это устроено под капотом Служба работает в фоновом режиме на уровне ядра системы под системной учетной записью. Вместо таймеров и бесконечных опросов служба использует механизм ETW. Как только операционная система порождает новый процесс, Windows сама шлёт событие нашей службе. Загрузки CPU в режиме ожидания нет. Как только в потоке ETW перехватывается запуск исполняемого файла игры, служба в находит Process Explorer и прибивает его.\nУстановка Качаете инсталлятор из релизов, запускаете. Всё.\nУдаление Идете в панель управления в управление программами, ищите там “TESO Wait Service” и удаляете. Всё.\nСсылки Исходный код: github.com/alezhu/teso_vs_procexp Скачать готовый инсталлятор: Releases Обсуждение бага на форуме игры: ESO Forums Thread ","wordCount":"630","inLanguage":"ru","datePublished":"2024-11-05T00:00:00Z","dateModified":"2024-11-05T00:00:00Z","author":{"@type":"Person","name":"alezhu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://alezhu.github.io/software/windows/%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83-teso-%D0%B2%D1%8B%D0%BB%D0%B5%D1%82%D0%B0%D0%B5%D1%82-%D0%B8%D0%B7-%D0%B7%D0%B0-process-explorer-%D0%B8-%D0%BA%D0%B0%D0%BA-%D1%8D%D1%82%D0%BE-%D1%80%D0%B5%D1%88%D0%B0%D0%B5%D1%82-%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-teso-wait-service/"},"publisher":{"@type":"Organization","name":"Блог alezhu","logo":{"@type":"ImageObject","url":"https://alezhu.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://alezhu.github.io/ accesskey=h title="Блог alezhu (Alt + H)">Блог alezhu</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://alezhu.github.io/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/ title=Программирование><span>Программирование</span></a></li><li><a href=https://alezhu.github.io/hardware/ title=Hardware><span>Hardware</span></a></li><li><a href=https://alezhu.github.io/software/ title=Software><span>Software</span></a></li><li><a href=https://alezhu.github.io/%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/ title=Электроника><span>Электроника</span></a></li><li><a href=https://alezhu.github.io/%D0%B0%D0%B2%D1%82%D0%BE-%D0%BC%D0%BE%D1%82%D0%BE/ title=Авто-мото><span>Авто-мото</span></a></li><li><a href=https://alezhu.github.io/%D0%B6%D0%B8%D0%B7%D0%B0/ title=Жиза><span>Жиза</span></a></li><li><a href=https://alezhu.github.io/archives/ title=Архив><span>Архив</span></a></li><li><a href=https://alezhu.github.io/search/ title="Поиск (Alt + /)" accesskey=/><span>Поиск</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><nav class=breadcrumbs role=navigation aria-label=Breadcrumb><a href=/>Главная</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>
+<a href=/software/>Software</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg>
+<a href=/software/windows/>Windows</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg></nav></header><div class="post-content md-content"><h1 id=почему-teso-вылетает-из-за-process-explorer-и-как-это-решает-служба-teso-wait-service>Почему TESO вылетает из-за Process Explorer и как это решает служба TESO Wait Service<a hidden class=anchor aria-hidden=true href=#почему-teso-вылетает-из-за-process-explorer-и-как-это-решает-служба-teso-wait-service>#</a></h1><div class=post-meta><span title=2024-11-05T00:00:00+00:00>5 ноября 2024 г.</span></div><p>Если вы играете в <strong>The Elder Scrolls Online</strong> (TESO) и при этом держите на компьютере популярнейшую системную утилиту <a href=https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer>Process Explorer</a> от Марка Руссиновича (Sysinternals), то с весны 2024 года вы наверняка познакомились с одним из самых раздражающих багов игры.</p><p>Сценарий до боли знаком: запускаем TESO, ждём загрузку заставки, вводим пароль (или логинимся через Steam), попадаем в лобби выбора персонажа, нажимаем «Играть», почти загружаемся в локацию (или даже загружаемся на минуту другую)&mldr; и тут бабах! Всплывает окно с крашем, игра схлопывается, и всё приходится начинать сначала.</p><p>Виновник? Банально открытый в фоне Process Explorer. Разработчики игры сломали совместимость с ним ещё в марте, а чинить, похоже, даже не планируют.</p><p>Рассказываю, в чём суть проблемы, почему меня это достало и как я решил вопрос с помощью собственной фоновой службы <strong>TESO Wait Service</strong>.</p><hr><h2 id=предыстория-update-41-и-античит-zos>Предыстория: Update 41 и античит ZOS<a hidden class=anchor aria-hidden=true href=#предыстория-update-41-и-античит-zos>#</a></h2><p>В марте 2024 года студия <a href=https://www.zenimax.com/>ZeniMax Online Studios</a> (ZOS) выкатила для TESO масштабный <strong>Update 41</strong>. Помимо игрового контента, в обновление зашили очередную итерацию внутренней античитерской защиты (или подкрутили гайки существующей).</p><p>Сразу после релиза игра начала намертво крашиться при запуске, если в операционной системе запущен Process Explorer.</p><p>Самое издевательское в этой ситуации — тайминг вылета. Игра не предупреждает вас на старте: <em>«Эй, у тебя открыт Process Explorer, закрой его»</em>. Нет! Она даёт вам полностью пройти авторизацию, зайти на экран выбора героев, инициировать загрузку зоны — и только в финале загрузки отваливается с ошибкой.</p><p>Игроки тут же создали <a href=https://forums.elderscrollsonline.com/en/discussion/654126/game-crashes-when-process-explorer-from-microsofts-sysinternals-is-running>ветку на официальном форуме ZOS</a> и засыпали техподдержку тикетами. Разработчики дежурно отписались, что «проблема исследуется».</p><p>И вот на дворе ноябрь 2024 года. Уже вышел Update 44. А воз (он же ZOS 😉) и ныне там: баг не исправлен, а сами разработчики, кажется, благополучно о нём забыли.</p><hr><h2 id=в-чём-боль-двойной-запуск-каждый-вечер>В чём боль: двойной запуск каждый вечер<a hidden class=anchor aria-hidden=true href=#в-чём-боль-двойной-запуск-каждый-вечер>#</a></h2><p>Казалось бы: ну закрой Process Explorer перед игрой, делов-то?</p><p>Но Process Explorer — это не та утилита, которую открываешь раз в месяц. У большинства системных администраторов, разработчиков и просто продвинутых пользователей Windows он либо висит в автозагрузке со старта системы, либо сворачивается в трей и живёт там неделями вместо стандартного Диспетчера задач.</p><p>В итоге ежедневный запуск игры превращается в день сурка:</p><ol><li>Запустил TESO.</li><li>Подождал загрузку, ввёл пароль.</li><li>Дождался лобби, выбрал персонажа.</li><li>Посмотрел на загрузочный экран&mldr; бац — вылет!</li><li>Вспомнил «добрым» словом ZOS.</li><li>Вспомнил про трей, закрыл Process Explorer.</li><li>Снова запустил TESO, снова пароль, снова выбор перса, снова загрузка.</li><li>Ура, наконец-то можно поиграть (потеряв минут пять времени на ровном месте).</li></ol><p>Забыть закрыть Process Explorer перед запуском игры — классика жанра: умеем, практикуем регулярно. Когда эта рутина повторилась в сотый раз, терпение лопнуло.</p><hr><h2 id=решение>Решение<a hidden class=anchor aria-hidden=true href=#решение>#</a></h2><p>Поскольку надежды на ZOS не осталось, нужно автоматизировать процесс: пусть компьютер сам следит за запуском TESO и молча прибивает Process Explorer в ту же секунду.</p><p>Сделать простенький скрипт на PowerShell или bat-файл? Неудобно:</p><ul><li>Скрипт нужно запускать вручную перед игрой (а мы и так забываем!).</li><li>Если держать скрипт в вечном цикле с опросом процессов, он будет впустую молотить процессор (<code>while ($true) { ... Start-Sleep }</code>).</li><li>Process Explorer часто запускается с повышенными правами администратора. Чтобы закрыть такой процесс из обычного пользовательского скрипта, придётся каждый раз ловить окно UAC.</li></ul><p>Поэтому я написал полноценную системную службу Windows — <a href=https://github.com/alezhu/teso_vs_procexp><strong>TESO Wait Service</strong></a>.</p><h3 id=как-это-устроено-под-капотом>Как это устроено под капотом<a hidden class=anchor aria-hidden=true href=#как-это-устроено-под-капотом>#</a></h3><p>Служба работает в фоновом режиме на уровне ядра системы под системной учетной записью. Вместо таймеров и бесконечных опросов служба использует механизм ETW. Как только операционная система порождает новый процесс, Windows сама шлёт событие нашей службе. Загрузки CPU в режиме ожидания нет. Как только в потоке ETW перехватывается запуск исполняемого файла игры, служба в находит Process Explorer и прибивает его.</p><hr><h2 id=установка>Установка<a hidden class=anchor aria-hidden=true href=#установка>#</a></h2><p>Качаете инсталлятор из <a href=https://github.com/alezhu/teso_vs_procexp/releases>релизов</a>, запускаете. Всё.</p><h2 id=удаление>Удаление<a hidden class=anchor aria-hidden=true href=#удаление>#</a></h2><p>Идете в панель управления в управление программами, ищите там &ldquo;TESO Wait Service&rdquo; и удаляете. Всё.</p><hr><h2 id=ссылки>Ссылки<a hidden class=anchor aria-hidden=true href=#ссылки>#</a></h2><ul><li>Исходный код: <a href=https://github.com/alezhu/teso_vs_procexp>github.com/alezhu/teso_vs_procexp</a></li><li>Скачать готовый инсталлятор: <a href=https://github.com/alezhu/teso_vs_procexp/releases>Releases</a></li><li>Обсуждение бага на форуме игры: <a href=https://forums.elderscrollsonline.com/en/discussion/654126/game-crashes-when-process-explorer-from-microsofts-sysinternals-is-running>ESO Forums Thread</a></li></ul></div><footer class=post-footer><ul class=post-tags><li><a href=https://alezhu.github.io/tags/windows/>Windows</a></li><li><a href=https://alezhu.github.io/tags/teso/>Teso</a></li><li><a href=https://alezhu.github.io/tags/sysinternals/>Sysinternals</a></li><li><a href=https://alezhu.github.io/tags/procexp/>Procexp</a></li><li><a href=https://alezhu.github.io/tags/c++/>C++</a></li><li><a href=https://alezhu.github.io/tags/winapi/>Winapi</a></li><li><a href=https://alezhu.github.io/tags/games/>Games</a></li><li><a href=https://alezhu.github.io/tags/utils/>Utils</a></li><li><a href=https://alezhu.github.io/tags/%D0%BE%D0%BF%D1%8B%D1%82/>Опыт</a></li></ul><nav class=paginav><a class=prev href=https://alezhu.github.io/%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D1%8D%D0%BD%D0%BA%D0%BE%D0%B4%D0%B5%D1%80-%D0%B4%D0%BB%D1%8F-rapoo-mt750sl/><span class=title>« Предыдущая</span>
+<span>Энкодер для Rapoo MT750SL</span>
+</a><a class=next href=https://alezhu.github.io/hardware/%D0%BD%D0%B0%D0%BA%D0%BE%D0%BF%D0%B8%D1%82%D0%B5%D0%BB%D0%B8/sd-%D0%BA%D0%B0%D1%80%D1%82%D1%8B-64%D0%B3%D0%B1-2024/><span class=title>Следующая »</span>
+<span>SD-карты 64ГБ 2024</span></a></nav></footer><div class=comments-section style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)"><h3 style=margin-bottom:1.5rem>Комментарии</h3><div class=giscus></div><script src=https://giscus.app/client.js data-repo=alezhu/alezhu.github.io data-repo-id=R_kgDOVufVnQ data-category=General data-category-id=DIC_kwDOVufVnc4DLIqK data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=ru crossorigin=anonymous async>
+  </script></div></article></main><footer class=footer><span>&copy; 2026 <a href=https://alezhu.github.io/>Блог alezhu</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        
+        let menuScrollTimeout;
+        menu.addEventListener("scroll", function () {
+            clearTimeout(menuScrollTimeout);
+            menuScrollTimeout = setTimeout(function () {
+                localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+            }, 150);
+        }, { passive: true });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            const target = document.querySelector(`[id='${decodeURIComponent(id)}']`);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                target.scrollIntoView();
+            }
+            
+            
+            if (target.tabIndex < 0 && !target.hasAttribute("tabindex")) {
+                target.setAttribute("tabindex", "-1");
+            }
+            target.focus({ preventScroll: true });
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script><script>
+    var toplink = document.getElementById("top-link");
+    var scrollTicking = false;
+    
+    window.addEventListener("scroll", function () {
+        if (scrollTicking) {
+            return;
+        }
+        scrollTicking = true;
+        requestAnimationFrame(function () {
+            const scrollThreshold = window.innerHeight;
+            const shown = document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold;
+            toplink.classList.toggle("hidden", !shown);
+            scrollTicking = false;
+        });
+    }, { passive: true });
+
+</script><script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script><script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script></body></html>
